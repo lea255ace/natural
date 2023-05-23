@@ -15,7 +15,7 @@ export default function Home() {
       <p>Current Longitude: {Math.abs(configValues.longitude) + " " + ((configValues.longitude > 0) ? "E" : "W")}</p>
       <Clock
         civilTimeMinutes={328}
-        civilTimeOffsetMinutes={17}
+        civilTimeOffsetMinutes={41.23}
         currentDaylightMinutes={805}
         maxDaylightMinutes={867}
       />
