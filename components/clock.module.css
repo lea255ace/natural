@@ -6,10 +6,30 @@
 
 .civil {
     position: absolute;
-    z-index: 2;
+    z-index: 3;
 }
 
 .solar {
     position: absolute;
+    z-index: 2;
+}
+
+.solstice {
+    position: absolute;
+    z-index: 3;
+}
+
+.sun {
+    position: absolute;
     z-index: 1;
+}
+
+.mid {
+    position: absolute;
+    z-index: 1;
+}
+
+.hand {
+    position: absolute;
+    z-index: 4;
 }
