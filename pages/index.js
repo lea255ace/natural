@@ -14,6 +14,8 @@ export default function Home() {
   // Calculations provided at https://gml.noaa.gov/grad/solcalc/solareqns.pdf
   const declination = astro_algo.calculateDeclinationRadians(initialDate);
   const eqTime = astro_algo.calculateEqTimeMinutes(initialDate);
+  //NB: Date.getTimezoneOffset returns an offset in minutes, with the opposite sign as the timezone.
+  const timeOffsetMinutes = eqTime + 4 * configValues.longitude + initialDate.getTimezoneOffset();
   const sunriseHourAngleDegrees = astro_algo.calculateSunriseHourAngleDegrees(configValues.latitude, declination);
   const sunriseTimeMinutes = 720 - 4 * (configValues.longitude + sunriseHourAngleDegrees) - eqTime;
   const sunsetTimeMinutes = 720 - 4 * (configValues.longitude - sunriseHourAngleDegrees) - eqTime;
@@ -38,7 +40,7 @@ export default function Home() {
       <p>Current Longitude: {Math.abs(configValues.longitude) + " " + ((configValues.longitude > 0) ? "E" : "W")}</p>
       <Clock
         civilTimeMinutes={currentTimeMinutes}
-        civilTimeOffsetMinutes={41.23}
+        civilTimeOffsetMinutes={timeOffsetMinutes}
         currentDaylightMinutes={daylightMinutes}
         maxDaylightMinutes={867}
       />
