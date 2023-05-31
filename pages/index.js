@@ -6,26 +6,29 @@ import astro_algo from '@lea255ace/astro_algo';
 
 export default function Home() {
   let initialDate = new Date();
-  const initialMinutes = (initialDate.getHours() * 60) + initialDate.getMinutes();
   const [configValues, updateConfigValues] = useConfigContext();
-  const [currentTimeMinutes, setCurrentTimeMinutes] = useState(initialMinutes);
+  const [currentDate, setCurrentDate] = useState(initialDate);
 
-  //TODO(MW): This should be hoisted into a utility module
-  // Calculations provided at https://gml.noaa.gov/grad/solcalc/solareqns.pdf
   const declination = astro_algo.calculateDeclinationRadians(initialDate);
   const eqTime = astro_algo.calculateEqTimeMinutes(initialDate);
+
   //NB: Date.getTimezoneOffset returns an offset in minutes, with the opposite sign as the timezone.
   const timeOffsetMinutes = eqTime + 4 * configValues.longitude + initialDate.getTimezoneOffset();
+
   const sunriseHourAngleDegrees = astro_algo.calculateSunriseHourAngleDegrees(configValues.latitude, declination);
-  const sunriseTimeMinutes = 720 - 4 * (configValues.longitude + sunriseHourAngleDegrees) - eqTime;
-  const sunsetTimeMinutes = 720 - 4 * (configValues.longitude - sunriseHourAngleDegrees) - eqTime;
-  const daylightMinutes = sunsetTimeMinutes - sunriseTimeMinutes;
+  //const sunriseTimeMinutes = 720 - 4 * (configValues.longitude + sunriseHourAngleDegrees) - eqTime;
+  //const sunsetTimeMinutes = 720 - 4 * (configValues.longitude - sunriseHourAngleDegrees) - eqTime;
+  const daylightMinutes = 8 * sunriseHourAngleDegrees;
+
+  const summerSolsticeDate = astro_algo.calculateQuarterDayForYear(astro_algo.QuarterDays.SummerSolstice, currentDate.getFullYear());
+  const solsticeDeclination = astro_algo.calculateDeclinationRadians(summerSolsticeDate);
+  const solsticeSunriseHourAngleDegrees = astro_algo.calculateSunriseHourAngleDegrees(configValues.latitude, solsticeDeclination);
+  const solsticeDaylightMinutes = 8 * solsticeSunriseHourAngleDegrees;
 
   useEffect(() => {
     const tick = setInterval(() => {
-      let newDate = new Date();
-      let newTimeMinutes = (newDate.getHours() * 60) + newDate.getMinutes();
-      setCurrentTimeMinutes(newTimeMinutes);
+      let currentDate = new Date();
+      setCurrentDate(currentDate);
     }, 1000);
     return () => clearInterval(tick);
   }, []);
@@ -39,10 +42,10 @@ export default function Home() {
       <p>Current Latitude: {Math.abs(configValues.latitude) + " " + ((configValues.latitude > 0) ? "N" : "S")}</p>
       <p>Current Longitude: {Math.abs(configValues.longitude) + " " + ((configValues.longitude > 0) ? "E" : "W")}</p>
       <Clock
-        civilTimeMinutes={currentTimeMinutes}
+        civilTimeMinutes={(currentDate.getHours() * 60) + currentDate.getMinutes()}
         civilTimeOffsetMinutes={timeOffsetMinutes}
         currentDaylightMinutes={daylightMinutes}
-        maxDaylightMinutes={867}
+        maxDaylightMinutes={solsticeDaylightMinutes}
       />
     </>
   );
