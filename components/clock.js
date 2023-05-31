@@ -16,8 +16,8 @@ export default function Clock({ civilTimeMinutes, civilTimeOffsetMinutes, curren
     return (
         <div>
             <h1>The current civil time is: {Math.floor(civilTimeMinutes/60)}h:{civilTimeMinutes%60}m</h1>
-            <h2>The current civil time offset is {civilTimeOffsetMinutes} minutes</h2>
-            <p>Today has {Math.floor(currentDaylightMinutes/60)}h{currentDaylightMinutes%60}m of daylight out of {Math.floor(maxDaylightMinutes/60)}h{maxDaylightMinutes%60}m maximum</p>
+            <h2>The current civil time offset is {Math.floor(civilTimeOffsetMinutes)} minutes</h2>
+            <p>Today has {Math.floor(currentDaylightMinutes/60)}h{Math.floor(currentDaylightMinutes%60)}m of daylight out of {Math.floor(maxDaylightMinutes/60)}h{Math.floor(maxDaylightMinutes%60)}m maximum</p>
             <div className={styles.container}>
                 <Image
                     src='/static/Civil Clock.png'
