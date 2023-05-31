@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Config from '../components/config'
 import Clock from '../components/clock'
 import { useConfigContext } from "../context/configProvider";
 import { useState, useEffect } from 'react';
@@ -39,8 +40,7 @@ export default function Home() {
         <title>Natural Time</title>
       </Head>
       <h1>Natural Time!</h1>
-      <p>Current Latitude: {Math.abs(configValues.latitude) + " " + ((configValues.latitude > 0) ? "N" : "S")}</p>
-      <p>Current Longitude: {Math.abs(configValues.longitude) + " " + ((configValues.longitude > 0) ? "E" : "W")}</p>
+      <Config />
       <Clock
         civilTimeMinutes={(currentDate.getHours() * 60) + currentDate.getMinutes()}
         civilTimeOffsetMinutes={timeOffsetMinutes}
