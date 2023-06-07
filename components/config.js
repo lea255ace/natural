@@ -1,6 +1,6 @@
 import { useConfigContext } from "../context/configProvider";
 
-export default function Config() {
+export default function Config({ className }) {
   const [configValues, updateConfigValues] = useConfigContext();
 
   function updateValues(e) {
@@ -15,7 +15,7 @@ export default function Config() {
   }
 
   return (
-    <>
+    <div className={`${className}`}>
       <form  onSubmit={updateValues}>
         <label>
           Latitude: <input name="latitude" defaultValue={configValues.latitude} />
@@ -30,6 +30,6 @@ export default function Config() {
       </form>
       <p>Current Latitude: {Math.abs(configValues.latitude) + " " + ((configValues.latitude > 0) ? "N" : "S")}</p>
       <p>Current Longitude: {Math.abs(configValues.longitude) + " " + ((configValues.longitude > 0) ? "E" : "W")}</p>
-    </>
+    </div>
   );
 }

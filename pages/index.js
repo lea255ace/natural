@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Config from '../components/config'
 import Clock from '../components/clock'
+import styles from './index.module.css'
 import { useConfigContext } from "../context/configProvider";
 import { useState, useEffect } from 'react';
 import astro_algo from '@lea255ace/astro_algo';
@@ -35,18 +36,18 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div className={styles.container}>
       <Head>
         <title>Natural Time</title>
       </Head>
-      <h1>Natural Time!</h1>
-      <Config />
       <Clock
+        className={styles.clock}
         civilTimeMinutes={(currentDate.getHours() * 60) + currentDate.getMinutes()}
         civilTimeOffsetMinutes={timeOffsetMinutes}
         currentDaylightMinutes={daylightMinutes}
         maxDaylightMinutes={solsticeDaylightMinutes}
       />
-    </>
+      <Config className={styles.config}/>
+    </div>
   );
 }
