@@ -131,9 +131,9 @@ export default function Clock({ className, civilTimeMinutes, civilTimeOffsetMinu
                 />
             </div>
             <div className={styles.text}>
-                <h2>The current civil time is: {Math.floor(civilTimeMinutes/60)}h:{civilTimeMinutes%60}m</h2>
+                <h2>The current civil time is: {String(Math.floor(civilTimeMinutes/60)).padStart(2, '0')}:{String(civilTimeMinutes%60).padStart(2, '0')}</h2>
                 <h3>The current civil time offset is {Math.floor(civilTimeOffsetMinutes)} minutes</h3>
-                <p>Today has {Math.floor(currentDaylightMinutes/60)}h{Math.floor(currentDaylightMinutes%60)}m of daylight out of {Math.floor(maxDaylightMinutes/60)}h{Math.floor(maxDaylightMinutes%60)}m maximum</p>
+                <p>Today has {Math.floor(currentDaylightMinutes/60)}h {String(Math.floor(currentDaylightMinutes%60)).padStart(2, '0')}m of daylight out of {Math.floor(maxDaylightMinutes/60)}h {String(Math.floor(maxDaylightMinutes%60)).padStart(2, '0')}m maximum</p>
             </div>
         </div>
     );
