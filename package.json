@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "clean": "rm -r .next/ out/ || exit 0"
   },
   "dependencies": {
     "@lea255ace/astro_algo": "0.1.0",

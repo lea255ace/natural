@@ -1,5 +1,11 @@
 import Image from 'next/image';
 import styles from './clock.module.css';
+import civilClock from '../public/Civil Clock.png';
+import solarClock from '../public/Solar Clock.png';
+import solsticeLine from '../public/Solstice Line.png';
+import sunLine from '../public/Sun Line.png';
+import midLine from '../public/Mid Line.png';
+import timeHand from '../public/Time Hand.png';
 
 const MINUTES_PER_DAY = 1440;
 
@@ -17,78 +23,78 @@ export default function Clock({ className, civilTimeMinutes, civilTimeOffsetMinu
         <div className={`${className} ${styles.container}`}>
             <div className={styles.clock}>
                 <Image
-                    src='/Civil Clock.png'
+                    src={civilClock}
                     className={styles.civil}
                     fill='true'
                     style={{ rotate: civilTimeOffsetAngle + 'deg' }}
                 />
                 <Image
-                    src='/Solar Clock.png'
+                    src={solarClock}
                     className={styles.solar}
                     fill='true'
                 />
                 <Image
-                    src='/Solstice Line.png'
+                    src={solsticeLine}
                     className={styles.solstice}
                     fill='true'
                     style={{ rotate: (solsticeAngle) + 'deg' }}
                 />
                 <Image
-                    src='/Solstice Line.png'
+                    src={solsticeLine}
                     className={styles.solstice}
                     fill='true'
                     style={{ rotate: (-solsticeAngle) + 'deg' }}
                 />
                 <Image
-                    src='/Solstice Line.png'
+                    src={solsticeLine}
                     className={styles.solstice}
                     fill='true'
                     style={{ rotate: (180 + solsticeAngle) + 'deg' }}
                 />
                 <Image
-                    src='/Solstice Line.png'
+                    src={solsticeLine}
                     className={styles.solstice}
                     fill='true'
                     style={{ rotate: (180 - solsticeAngle) + 'deg' }}
                 />
                 <Image
-                    src='/Sun Line.png'
+                    src={sunLine}
                     className={styles.sun}
                     fill='true'
                     style={{ rotate: (sunAngle) + 'deg' }}
                 />
                 <Image
-                    src='/Sun Line.png'
+                    src={sunLine}
                     className={styles.sun}
                     fill='true'
                     style={{ rotate: (180 - sunAngle) + 'deg' }}
                 />
                 <Image
-                    src='/Mid Line.png'
+                    src={midLine}
                     className={styles.mid}
                     fill='true'
                     style={{ rotate: (middayAngle) + 'deg' }}
                 />
                 <Image
-                    src='/Mid Line.png'
+                    src={midLine}
                     className={styles.mid}
                     fill='true'
                     style={{ rotate: (180 - middayAngle) + 'deg' }}
                 />
                 <Image
-                    src='/Mid Line.png'
+                    src={midLine}
                     className={styles.mid}
                     fill='true'
                     style={{ rotate: (midnightAngle) + 'deg' }}
                 />
                 <Image
-                    src='/Mid Line.png'
+                    src={midLine}
                     className={styles.mid}
                     fill='true'
                     style={{ rotate: (180 - midnightAngle) + 'deg' }}
                 />
                 <Image
-                    src='/Time Hand.png'
+                    src={timeHand}
                     className={styles.hand}
                     fill='true'
                     style={{ rotate: civilTimeAngle + 'deg' }}
