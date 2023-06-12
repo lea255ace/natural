@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import styles from './clock.module.css';
-import civilClock from '../public/Civil Clock.png';
-import solarClock from '../public/Solar Clock.png';
-import solsticeLine from '../public/Solstice Line.png';
-import sunLine from '../public/Sun Line.png';
-import midLine from '../public/Mid Line.png';
-import timeHand from '../public/Time Hand.png';
-import morning from '../public/Morning.png';
-import forenoon from '../public/Forenoon.png';
-import afternoon from '../public/Afternoon.png';
-import evening from '../public/Evening.png';
+import civilClock from '/public/Civil Clock.png';
+import solarClock from '/public/Solar Clock.png';
+import solsticeLine from '/public/Solstice Line.png';
+import sunLine from '/public/Sun Line.png';
+import midLine from '/public/Mid Line.png';
+import timeHand from '/public/Time Hand.png';
+import morning from '/public/Morning.png';
+import forenoon from '/public/Forenoon.png';
+import afternoon from '/public/Afternoon.png';
+import evening from '/public/Evening.png';
 
 const MINUTES_PER_DAY = 1440;
 

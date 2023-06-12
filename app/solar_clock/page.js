@@ -1,7 +1,10 @@
-import Clock from '../components/clock';
+'use client'
+
+import Clock from 'components/clock';
 import { useState } from 'react';
 
 export default function SolarClock() {
+    //TODO(MW): Push these down into client components
     const [currentTimeMinutes, setCurrentTimeMinutes] = useState(739);
     const [civilTimeOffsetMinutes, setCivilTimeOffsetMinutes] = useState(-63.2);
     const [currentDaylightMinutes, setCurrentDaylightMinutes] = useState(872);
