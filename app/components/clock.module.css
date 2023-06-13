@@ -2,48 +2,6 @@
     width: auto;
 }
 
-.clock {
-    position: relative;
-    width: 640px;
-    height: 640px;
-    margin: auto;
-}
-
-.civil {
-    position: absolute;
-    z-index: 3;
-}
-
-.solar {
-    position: absolute;
-    z-index: 1;
-}
-
-.solstice {
-    position: absolute;
-    z-index: 1;
-}
-
-.sun {
-    position: absolute;
-    z-index: 2;
-}
-
-.mid {
-    position: absolute;
-    z-index: 1;
-}
-
-.label {
-    position: absolute;
-    z-index: 3;
-}
-
-.hand {
-    position: absolute;
-    z-index: 4;
-}
-
 .text {
     text-align: center;
     margin: -50px auto 0px;

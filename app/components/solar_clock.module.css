@@ -1,0 +1,41 @@
+.solarClock {
+    position: relative;
+    width: 640px;
+    height: 640px;
+    margin: auto;
+}
+
+.frame {
+    position: absolute;
+    z-index: 2;
+}
+
+.civil {
+    position: absolute;
+    z-index: 4;
+}
+
+.solstice {
+    position: absolute;
+    z-index: 1;
+}
+
+.sun {
+    position: absolute;
+    z-index: 3;
+}
+
+.phase {
+    position: absolute;
+    z-index: 1;
+}
+
+.label {
+    position: absolute;
+    z-index: 1;
+}
+
+.hand {
+    position: absolute;
+    z-index: 5;
+}
