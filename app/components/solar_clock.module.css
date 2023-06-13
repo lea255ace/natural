@@ -30,6 +30,11 @@
     z-index: 1;
 }
 
+.stage {
+    position: absolute;
+    z-index: 1;
+}
+
 .label {
     position: absolute;
     z-index: 1;
