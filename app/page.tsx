@@ -1,8 +1,9 @@
-import Head from 'next/head';
-import Config from '../components/config'
-import Clock from '../components/clock'
+'use client';
+
+import Config from 'components/config'
+import Clock from 'components/clock'
 import styles from './index.module.css'
-import { useConfigContext } from "../context/configProvider";
+import { useConfigContext } from "context/configProvider";
 import { useState, useEffect } from 'react';
 import astro_algo from '@lea255ace/astro_algo';
 
@@ -27,6 +28,7 @@ export default function Home() {
   const solsticeSunriseHourAngleDegrees = astro_algo.calculateSunriseHourAngleDegrees(configValues.latitude, solsticeDeclination);
   const solsticeDaylightMinutes = 8 * solsticeSunriseHourAngleDegrees;
 
+  // TODO(MW): Could this be pushed down into the Clock component to allow this file to be a server component?
   useEffect(() => {
     const tick = setInterval(() => {
       let currentDate = new Date();
@@ -37,9 +39,6 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Natural Time</title>
-      </Head>
       <Clock
         className={styles.clock}
         civilTimeMinutes={(currentDate.getHours() * 60) + currentDate.getMinutes()}
@@ -47,7 +46,7 @@ export default function Home() {
         currentDaylightMinutes={daylightMinutes}
         maxDaylightMinutes={solsticeDaylightMinutes}
       />
-      <Config className={styles.config}/>
+      <Config className={styles.config} />
     </div>
   );
 }

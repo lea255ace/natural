@@ -1,4 +1,4 @@
-import { useConfigContext } from "../context/configProvider";
+import { useConfigContext } from "context/configProvider";
 
 export default function Config({ className }) {
   const [configValues, updateConfigValues] = useConfigContext();

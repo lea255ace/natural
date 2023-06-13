@@ -1,22 +1,18 @@
-.container {
-    width: auto;
-}
-
-.clock {
+.solarClock {
     position: relative;
     width: 640px;
     height: 640px;
     margin: auto;
 }
 
-.civil {
+.frame {
     position: absolute;
-    z-index: 3;
+    z-index: 2;
 }
 
-.solar {
+.civil {
     position: absolute;
-    z-index: 1;
+    z-index: 4;
 }
 
 .solstice {
@@ -26,25 +22,25 @@
 
 .sun {
     position: absolute;
-    z-index: 2;
+    z-index: 3;
 }
 
-.mid {
+.phase {
+    position: absolute;
+    z-index: 1;
+}
+
+.stage {
     position: absolute;
     z-index: 1;
 }
 
 .label {
     position: absolute;
-    z-index: 3;
+    z-index: 1;
 }
 
 .hand {
     position: absolute;
-    z-index: 4;
-}
-
-.text {
-    text-align: center;
-    margin: -50px auto 0px;
+    z-index: 5;
 }

@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useContext, useReducer } from "react";
 
 const initialConfigValues = {
@@ -5,7 +7,7 @@ const initialConfigValues = {
     longitude: -74
 };
 
-const Context = createContext();
+export const ConfigContext = createContext({})
 
 export function ConfigProvider({ children }) {
     const [configValues, updateConfigValues] = useReducer(
@@ -14,10 +16,10 @@ export function ConfigProvider({ children }) {
     );
 
     return (
-        <Context.Provider value={[configValues, updateConfigValues]}>{children}</Context.Provider>
+        <ConfigContext.Provider value={[configValues, updateConfigValues]}>{children}</ConfigContext.Provider>
     );
 }
 
 export function useConfigContext() {
-    return useContext(Context);
+    return useContext(ConfigContext);
 }
