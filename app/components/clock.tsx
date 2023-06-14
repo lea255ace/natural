@@ -1,5 +1,5 @@
 import styles from './clock.module.css';
-import SolarClock from 'components/solar_clock'
+import SolarClock from 'components/solar_clock';
 
 const MINUTES_PER_DAY = 1440;
 const DEGREES_PER_MINUTE = 360 / MINUTES_PER_DAY;

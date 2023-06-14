@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from 'react';
 
 const initialConfigValues = {
     latitude: 40,
     longitude: -74
 };
 
-export const ConfigContext = createContext({})
+export const ConfigContext = createContext({});
 
 export function ConfigProvider({ children }) {
     const [configValues, updateConfigValues] = useReducer(

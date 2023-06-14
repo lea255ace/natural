@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Clock from 'components/clock';
 import { useState } from 'react';
@@ -12,15 +12,15 @@ export default function SolarClock() {
 
     const changeCurrentTimeMinutes = (e) => {
         setCurrentTimeMinutes(e.target.valueAsNumber);
-    }
+    };
 
     const changeCivilTimeOffsetMinutes = (e) => {
         setCivilTimeOffsetMinutes(e.target.valueAsNumber);
-    }
+    };
 
     const changeCurrentDaylightMinutes = (e) => {
         setCurrentDaylightMinutes(e.target.valueAsNumber);
-    }
+    };
 
     const changeMaxDaylightMinutes = (e) => {
         const minutes = e.target.valueAsNumber;
@@ -30,7 +30,7 @@ export default function SolarClock() {
         } else if (currentDaylightMinutes < 1440 - minutes) {
             setCurrentDaylightMinutes(1440 - minutes);
         }
-    }
+    };
 
     return (
         <>
