@@ -9,10 +9,6 @@ const nextConfig = {
     assetPrefix: isProd ? '/natural_time' : '',
     images: {
         unoptimized: true,
-    },
-    typescript: {
-        //TODO(MW): Remove this once I figure out how to solve all the problems.
-        ignoreBuildErrors: true,
     }
 };
 

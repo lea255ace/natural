@@ -51,7 +51,7 @@ export default function SolarClock() {
                     step={1}
                     value={currentTimeMinutes}
                 />
-                <label for="currentTimeMinutes">Current Time</label>
+                <label htmlFor="currentTimeMinutes">Current Time</label>
                 <br/>
                 <input
                     id="civilTimeOffsetMinutes"
@@ -62,7 +62,7 @@ export default function SolarClock() {
                     step={0.1}
                     value={civilTimeOffsetMinutes}
                 />
-                <label for="civilTimeOffsetMinutes">Civil Time Offset</label>
+                <label htmlFor="civilTimeOffsetMinutes">Civil Time Offset</label>
                 <br/>
                 <input
                     id="civilTimeOffsetMinutes"
@@ -73,7 +73,7 @@ export default function SolarClock() {
                     step={1}
                     value={currentDaylightMinutes}
                 />
-                <label for="currentDaylightMinutes">Current Daylight</label>
+                <label htmlFor="currentDaylightMinutes">Current Daylight</label>
                 <br/>
                 <input 
                     id="maxDaylightMinutes"
@@ -84,7 +84,7 @@ export default function SolarClock() {
                     step={1}
                     value={maxDaylightMinutes}
                 />
-                <label for="maxDaylightMinutes">Max Daylight</label>
+                <label htmlFor="maxDaylightMinutes">Max Daylight</label>
                 <br/>
             </div>
             <Clock

@@ -1,17 +1,17 @@
-import { useConfigContext } from 'context/configProvider';
+import { ConfigParameters, useConfigContext } from 'context/configProvider';
 
 export default function Config({ className }) {
-    const [configValues, updateConfigValues] = useConfigContext();
+    const {configValues, updateConfig} = useConfigContext();
 
     function updateValues(e) {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
-        const parameters = {};
-        for (const pair of formData.entries()) {
-            parameters[pair[0]] = pair[1];
+        const parameters = {} as ConfigParameters;
+        for (const [k, v] of formData.entries()) {
+            parameters[k] = v;
         }
-        updateConfigValues(parameters);
+        updateConfig(parameters);
     }
 
     return (

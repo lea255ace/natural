@@ -9,7 +9,7 @@ import astro_algo from '@lea255ace/astro_algo';
 
 export default function Home() {
     const initialDate = new Date();
-    const [configValues, updateConfigValues] = useConfigContext();
+    const {configValues} = useConfigContext();
     const [currentDate, setCurrentDate] = useState(initialDate);
 
     const declination = astro_algo.calculateDeclinationRadians(initialDate);
