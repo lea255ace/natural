@@ -1,0 +1,15 @@
+.container {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+}
+
+.clock {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.config {
+  grid-column: 1;
+  grid-row: 2;
+}

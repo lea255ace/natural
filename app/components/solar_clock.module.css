@@ -1,8 +1,7 @@
 .solarClock {
     position: relative;
-    width: 640px;
-    height: 640px;
-    margin: auto;
+    aspect-ratio: 1/1;
+    overflow: hidden;
 }
 
 .frame {

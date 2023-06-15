@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Clock from 'components/clock';
 import { useState } from 'react';
@@ -12,15 +12,15 @@ export default function SolarClock() {
 
     const changeCurrentTimeMinutes = (e) => {
         setCurrentTimeMinutes(e.target.valueAsNumber);
-    }
+    };
 
     const changeCivilTimeOffsetMinutes = (e) => {
         setCivilTimeOffsetMinutes(e.target.valueAsNumber);
-    }
+    };
 
     const changeCurrentDaylightMinutes = (e) => {
         setCurrentDaylightMinutes(e.target.valueAsNumber);
-    }
+    };
 
     const changeMaxDaylightMinutes = (e) => {
         const minutes = e.target.valueAsNumber;
@@ -30,7 +30,7 @@ export default function SolarClock() {
         } else if (currentDaylightMinutes < 1440 - minutes) {
             setCurrentDaylightMinutes(1440 - minutes);
         }
-    }
+    };
 
     return (
         <>
@@ -51,7 +51,7 @@ export default function SolarClock() {
                     step={1}
                     value={currentTimeMinutes}
                 />
-                <label for="currentTimeMinutes">Current Time</label>
+                <label htmlFor="currentTimeMinutes">Current Time</label>
                 <br/>
                 <input
                     id="civilTimeOffsetMinutes"
@@ -62,7 +62,7 @@ export default function SolarClock() {
                     step={0.1}
                     value={civilTimeOffsetMinutes}
                 />
-                <label for="civilTimeOffsetMinutes">Civil Time Offset</label>
+                <label htmlFor="civilTimeOffsetMinutes">Civil Time Offset</label>
                 <br/>
                 <input
                     id="civilTimeOffsetMinutes"
@@ -73,7 +73,7 @@ export default function SolarClock() {
                     step={1}
                     value={currentDaylightMinutes}
                 />
-                <label for="currentDaylightMinutes">Current Daylight</label>
+                <label htmlFor="currentDaylightMinutes">Current Daylight</label>
                 <br/>
                 <input 
                     id="maxDaylightMinutes"
@@ -84,7 +84,7 @@ export default function SolarClock() {
                     step={1}
                     value={maxDaylightMinutes}
                 />
-                <label for="maxDaylightMinutes">Max Daylight</label>
+                <label htmlFor="maxDaylightMinutes">Max Daylight</label>
                 <br/>
             </div>
             <Clock

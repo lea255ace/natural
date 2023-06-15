@@ -1,11 +1,14 @@
 'use client';
 
 import Config from 'components/config';
-import Clock from 'components/clock';
-import styles from './index.module.css';
+import SolarClock from 'components/solar_clock';
+import styles from './mobile.module.css';
 import { useConfigContext } from 'context/configProvider';
 import { useState, useEffect } from 'react';
 import astro_algo from '@lea255ace/astro_algo';
+
+const MINUTES_PER_DAY = 1440;
+const DEGREES_PER_MINUTE = 360 / MINUTES_PER_DAY;
 
 export default function Home() {
     const initialDate = new Date();
@@ -37,15 +40,22 @@ export default function Home() {
         return () => clearInterval(tick);
     }, []);
 
+    const civilTimeMinutes = (currentDate.getHours() * 60) + currentDate.getMinutes();
+    const civilTimeHourAngleDeg = ((civilTimeMinutes + timeOffsetMinutes) / MINUTES_PER_DAY - 0.5) * 360;
+    const sunriseHourAngleDeg = (daylightMinutes / MINUTES_PER_DAY) * -180;
+    const solsticeSunriseHourAngleDeg = (solsticeDaylightMinutes / MINUTES_PER_DAY) * -180;
+    const civilTimeOffsetAngleDeg = timeOffsetMinutes * DEGREES_PER_MINUTE;
+
     return (
         <div className={styles.container}>
-            <Clock
-                className={styles.clock}
-                civilTimeMinutes={(currentDate.getHours() * 60) + currentDate.getMinutes()}
-                civilTimeOffsetMinutes={timeOffsetMinutes}
-                currentDaylightMinutes={daylightMinutes}
-                maxDaylightMinutes={solsticeDaylightMinutes}
-            />
+            <div className={styles.clock}>
+                <SolarClock
+                    civilTimeOffsetAngleDeg={civilTimeOffsetAngleDeg}
+                    solsticeSunriseHourAngleDeg={solsticeSunriseHourAngleDeg}
+                    sunriseHourAngleDeg={sunriseHourAngleDeg}
+                    solarHourAngleDeg={civilTimeHourAngleDeg}
+                />
+            </div>
             <Config className={styles.config} />
         </div>
     );

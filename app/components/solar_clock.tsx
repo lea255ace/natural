@@ -33,7 +33,7 @@ const RotatingImage = ({ image: { imageSrc, className }, rotationAngleDeg }: Rot
         src={imageSrc}
         className={className}
         fill={true}
-        alt=""
+        alt=''
         style={{ rotate: rotationAngleDeg + 'deg' }}
     />
 );
@@ -44,7 +44,7 @@ const ClockFrame = (): JSX.Element => (
         src={clockFrame}
         className={styles.frame}
         fill={true}
-        alt=""
+        alt=''
     />
 );
 
@@ -97,8 +97,8 @@ function PhaseLines({ sunriseHourAngleDeg }:
 const stageLineImage: ClockImage = { imageSrc: stageLine, className: styles.stage };
 function StageLines({ sunriseHourAngleDeg }:
     { sunriseHourAngleDeg: number }): JSX.Element {
-        const dayInterStageAngleDeg = -sunriseHourAngleDeg / 6;
-        const nightInterStageAngleDeg = (180 + sunriseHourAngleDeg) / 6;
+    const dayInterStageAngleDeg = -sunriseHourAngleDeg / 6;
+    const nightInterStageAngleDeg = (180 + sunriseHourAngleDeg) / 6;
     return (
         <>
             <RotatingImage image={stageLineImage} rotationAngleDeg={-dayInterStageAngleDeg * 1} />
@@ -148,8 +148,9 @@ const thirdWatchLabelImage: ClockImage = { imageSrc: thirdWatchLabel, className:
 const fourthWatchLabelImage: ClockImage = { imageSrc: fourthWatchLabel, className: styles.label };
 function NightLabels({ sunriseHourAngleDeg }:
     { sunriseHourAngleDeg: number }): JSX.Element {
-    const firstWatchLabelHourAngleDeg = -sunriseHourAngleDeg * 3/4 + 45;
-    const secondWatchLabelHourAngleDeg = -sunriseHourAngleDeg * 1/4 + 135;
+    const firstWatchLabelHourAngleDeg = -sunriseHourAngleDeg * 3 / 4 + 45;
+    const secondWatchLabelHourAngleDeg = -sunriseHourAngleDeg * 1 / 4 + 135;
+
     return (
         <>
             <RotatingImage image={firstWatchLabelImage} rotationAngleDeg={firstWatchLabelHourAngleDeg} />
@@ -166,12 +167,12 @@ const TimeHand = ({ solarHourAngleDeg }:
     <RotatingImage image={timeHandImage} rotationAngleDeg={solarHourAngleDeg} />
 );
 
-export default function SolarClock({civilTimeOffsetAngleDeg = 0, solsticeSunriseHourAngleDeg = -120, sunriseHourAngleDeg = -90, solarHourAngleDeg = 0}: {
-        civilTimeOffsetAngleDeg: number
-        solsticeSunriseHourAngleDeg: number
-        sunriseHourAngleDeg: number
-        solarHourAngleDeg: number
-    }) {
+export default function SolarClock({ civilTimeOffsetAngleDeg = 0, solsticeSunriseHourAngleDeg = -120, sunriseHourAngleDeg = -90, solarHourAngleDeg = 0 }: {
+    civilTimeOffsetAngleDeg: number
+    solsticeSunriseHourAngleDeg: number
+    sunriseHourAngleDeg: number
+    solarHourAngleDeg: number
+}) {
 
     return (
         <div className={styles.solarClock}>
