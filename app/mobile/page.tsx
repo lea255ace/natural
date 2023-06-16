@@ -3,6 +3,9 @@
 import Config from 'components/config';
 import SolarClock from 'components/solar_clock';
 import styles from './mobile.module.css';
+import Moment from 'types/moment';
+import { MomentLabel, MomentMinutes } from  'components/moment';
+import * as Constant from 'types/constants';
 import { useConfigContext } from 'context/configProvider';
 import { useState, useEffect } from 'react';
 import astro_algo from '@lea255ace/astro_algo';
@@ -46,6 +49,14 @@ export default function Home() {
     const solsticeSunriseHourAngleDeg = (solsticeDaylightMinutes / MINUTES_PER_DAY) * -180;
     const civilTimeOffsetAngleDeg = timeOffsetMinutes * DEGREES_PER_MINUTE;
 
+    let trueSolarTime = civilTimeMinutes + timeOffsetMinutes;
+    if (trueSolarTime < 0) {
+        trueSolarTime += Constant.MINUTES_PER_DAY;
+    } else if (trueSolarTime >= Constant.MINUTES_PER_DAY) {
+        trueSolarTime -= Constant.MINUTES_PER_DAY;
+    }
+    const moment = new Moment({ daylightMinutes: daylightMinutes, solarTimeMinutes: trueSolarTime });
+
     return (
         <div className={styles.container}>
             <div className={styles.clock}>
@@ -55,6 +66,10 @@ export default function Home() {
                     sunriseHourAngleDeg={sunriseHourAngleDeg}
                     solarHourAngleDeg={civilTimeHourAngleDeg}
                 />
+            </div>
+            <div>
+                <MomentLabel className={styles.moment} momentString={moment.momentName()} />
+                <MomentMinutes className={styles.rem} minutesElapsed={Math.floor(moment.currentStageMinutesElapsed())} minutesTotal={Math.floor(moment.currentStageMinutesTotal())} />
             </div>
             <Config className={styles.config} />
         </div>
