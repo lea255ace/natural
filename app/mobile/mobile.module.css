@@ -1,7 +1,7 @@
 .container {
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto auto auto 200px auto;
 }
 
 .clock {
@@ -9,7 +9,26 @@
   grid-row: 1;
 }
 
+.moment {
+  grid-row: 2;
+    font-size: 1.17em;
+    width: fit-content;
+    text-align: center;
+    margin: -20px auto 0px;
+}
+
+.moment em {
+    font-style: normal;
+    font-weight: bold;
+}
+
+.rem {
+  grid-row: 3;
+    font-size: 0.89em;
+    text-align: center;
+}
+
 .config {
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 5;
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 export type ConfigParameters = {
     latitude: number;
@@ -12,17 +12,25 @@ type ConfigContextType = {
     updateConfig: (newValues: ConfigParameters) => void;
 }
 
-const initialConfigValues: ConfigParameters = {
-    latitude: 40,
-    longitude: -74
-};
-
 const ConfigContext = createContext<ConfigContextType>({} as ConfigContextType);
 
 export function ConfigProvider({ children }) {
-    const [configValues, setConfigValues] = useState<ConfigParameters>(initialConfigValues);
+    const defaultConfigValues: ConfigParameters = {
+        latitude: 40,
+        longitude: -74
+    };
+    const [configValues, setConfigValues] = useState<ConfigParameters>(defaultConfigValues);
+
+    useEffect(() => {
+        const localConfigString = localStorage.getItem('configValues');
+        if (typeof localConfigString === 'string') {
+            setConfigValues(JSON.parse(localConfigString));
+        }
+    }, []);
+
     const updateConfig = (newValues: ConfigParameters) => {
         setConfigValues(newValues);
+        localStorage.setItem('configValues', JSON.stringify(newValues));
     };
 
     return (
