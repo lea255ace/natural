@@ -26,6 +26,17 @@
                 "uriFormat": "%s",
                 "action": "debugWithChrome"
             }
+        },
+        {
+            "name": "Next.js debug prod",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npx serve out",
+            "serverReadyAction": {
+                "pattern": "Local:.*http://localhost:([0-9]+)",
+                "uriFormat": "http://localhost:%s",
+                "action": "debugWithChrome"
+            }
         }
     ]
 }
