@@ -9,9 +9,12 @@ const prefix = (isProd & !debugBuild) ? '/natural_time' : '';
 const nextConfig = {
     output: 'export',
     assetPrefix: prefix,
+    pageExtensions: ['mdx', 'tsx', 'ts', 'jsx', 'js'],
     images: {
         unoptimized: true,
     }
 };
 
-module.exports = nextConfig;
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withMDX = require('@next/mdx')();
+module.exports = withMDX(nextConfig);
