@@ -10,7 +10,6 @@ const prefix = (isProd & !debugBuild) ? '/natural_time' : '';
 const nextConfig = {
     output: 'export',
     assetPrefix: prefix,
-    pageExtensions: ['mdx', 'tsx', 'ts', 'jsx', 'js'],
     images: {
         unoptimized: true,
     }

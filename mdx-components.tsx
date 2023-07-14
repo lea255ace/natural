@@ -1,15 +1,14 @@
 import type { MDXComponents } from 'mdx/types';
+import { Heading } from '@chakra-ui/react';
 
-// This file allows you to provide custom React components
-// to be used in MDX files. You can import and use any
-// React component you want, including components from
-// other libraries.
+const customComponents = {
+    h1: ({children}) => <Heading as="h1" size='2xl'>{children}</Heading>,
+    h2: ({children}) => <Heading as="h2" size='xl'>{children}</Heading>
+};
 
-// This file is required to use MDX in `app` directory.
 export function useMDXComponents(components: MDXComponents): MDXComponents {
     return {
-    // Allows customizing built-in components, e.g. to add styling.
-    // h1: ({ children }) => <h1 style={{ fontSize: "100px" }}>{children}</h1>,
         ...components,
+        ...customComponents
     };
 }
