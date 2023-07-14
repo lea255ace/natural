@@ -9,7 +9,12 @@
     "clean": "rm -r .next/ out/ || exit 0"
   },
   "dependencies": {
+    "@chakra-ui/next-js": "^2.1.4",
+    "@chakra-ui/react": "^2.7.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@lea255ace/astro_algo": "0.1.0",
+    "framer-motion": "^10.12.18",
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0"

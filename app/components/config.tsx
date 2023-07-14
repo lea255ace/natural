@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { ConfigParameters, useConfigContext } from 'context/configProvider';
+import { Box, Input, FormLabel, FormControl, Button, Text } from '@chakra-ui/react';
 
 type DisplayedParameters = {
     latitude: string;
     longitude: string;
 };
 
-export default function Config({ className }) {
+export default function Config() {
     const {configValues, updateConfig} = useConfigContext();
     const [displayedValues, setDisplayedValues] = useState<DisplayedParameters>(translateConfigValues(configValues));
 
@@ -32,25 +33,25 @@ export default function Config({ className }) {
     }, [configValues]);
 
     return (
-        <div className={`${className}`}>
+        <Box marginLeft='6' marginRight='6'>
             <form onSubmit={updateConfigValues}>
-                <label>Latitude:
-                    <input name='latitude' value={displayedValues.latitude}
-                        onChange={e => setDisplayedValues({...displayedValues, latitude: e.target.value})}
-                    />
-                </label>
-                <br />
-                <label>Longitude:
-                    <input name='longitude' value={displayedValues.longitude}
-                        onChange={e => setDisplayedValues({...displayedValues, longitude: e.target.value})}
-                    />
-                </label>
-                <br />
-                <button type='reset'>Reset</button>
-                <button type='submit'>Update</button>
+                <FormControl>
+                    <FormLabel>Latitude:
+                        <Input name='latitude' value={displayedValues.latitude}
+                            onChange={e => setDisplayedValues({...displayedValues, latitude: e.target.value})}
+                        />
+                    </FormLabel>
+                    <FormLabel>Longitude:
+                        <Input name='longitude' value={displayedValues.longitude}
+                            onChange={e => setDisplayedValues({...displayedValues, longitude: e.target.value})}
+                        />
+                    </FormLabel>
+                </FormControl>
+                <Button type='submit' size='sm' variant='outline'>Update</Button>
             </form>
-            <p>Current Latitude: {Math.abs(configValues.latitude) + ' ' + ((configValues.latitude > 0) ? 'N' : 'S')}</p>
-            <p>Current Longitude: {Math.abs(configValues.longitude) + ' ' + ((configValues.longitude > 0) ? 'E' : 'W')}</p>
-        </div>
+            <br/>
+            <Text>Current Latitude: {Math.abs(configValues.latitude) + ' ' + ((configValues.latitude > 0) ? 'N' : 'S')}</Text>
+            <Text>Current Longitude: {Math.abs(configValues.longitude) + ' ' + ((configValues.longitude > 0) ? 'E' : 'W')}</Text>
+        </Box>
     );
 }

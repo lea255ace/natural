@@ -1,6 +1,6 @@
 import { JSX } from 'react';
 import Image, { StaticImageData } from 'next/image';
-import styles from './solar_clock.module.css';
+import { Box } from '@chakra-ui/react';
 
 import clockFrame from '/public/Clock Frame.png';
 import civilClock from '/public/Civil Clock.png';
@@ -20,7 +20,7 @@ import timeHand from '/public/Time Hand.png';
 
 type ClockImage = {
     imageSrc: StaticImageData
-    className: string
+    zIndex: number
 }
 
 type RotatingImageProps = {
@@ -28,13 +28,12 @@ type RotatingImageProps = {
     rotationAngleDeg: number
 }
 
-const RotatingImage = ({ image: { imageSrc, className }, rotationAngleDeg }: RotatingImageProps): JSX.Element => (
+const RotatingImage = ({ image: { imageSrc, zIndex}, rotationAngleDeg }: RotatingImageProps): JSX.Element => (
     <Image
         src={imageSrc}
-        className={className}
         fill={true}
         alt=''
-        style={{ rotate: rotationAngleDeg + 'deg' }}
+        style={{ rotate: rotationAngleDeg + 'deg', zIndex: zIndex }}
     />
 );
 
@@ -42,20 +41,20 @@ const RotatingImage = ({ image: { imageSrc, className }, rotationAngleDeg }: Rot
 const ClockFrame = (): JSX.Element => (
     <Image
         src={clockFrame}
-        className={styles.frame}
         fill={true}
         alt=''
+        style={{ zIndex: 2 }}
     />
 );
 
-const civilClockImage: ClockImage = { imageSrc: civilClock, className: styles.civil };
+const civilClockImage: ClockImage = { imageSrc: civilClock, zIndex: 4 };
 const CivilClock = ({ civilTimeOffsetAngleDeg }:
     { civilTimeOffsetAngleDeg: number }): JSX.Element => (
     <RotatingImage image={civilClockImage} rotationAngleDeg={civilTimeOffsetAngleDeg} />
 );
 
 //TODO(MW): Adjust image orientations so hour angle can be used directly, removing the +90 offset (+180 for time hand).
-const solsticeLineImage: ClockImage = { imageSrc: solsticeLine, className: styles.solstice };
+const solsticeLineImage: ClockImage = { imageSrc: solsticeLine, zIndex: 1 };
 function SolsticeLines({ solsticeSunriseHourAngleDeg }:
     { solsticeSunriseHourAngleDeg: number }): JSX.Element {
     return (
@@ -69,7 +68,7 @@ function SolsticeLines({ solsticeSunriseHourAngleDeg }:
     );
 }
 
-const sunLineImage: ClockImage = { imageSrc: sunLine, className: styles.sun };
+const sunLineImage: ClockImage = { imageSrc: sunLine, zIndex: 2 };
 const SunLines = ({ sunriseHourAngleDeg }:
     { sunriseHourAngleDeg: number }): JSX.Element => (
     <>
@@ -78,7 +77,7 @@ const SunLines = ({ sunriseHourAngleDeg }:
     </>
 );
 
-const phaseLineImage: ClockImage = { imageSrc: phaseLine, className: styles.phase };
+const phaseLineImage: ClockImage = { imageSrc: phaseLine, zIndex: 1 };
 function PhaseLines({ sunriseHourAngleDeg }:
     { sunriseHourAngleDeg: number }): JSX.Element {
     const dayPhaseHourAngleDeg = sunriseHourAngleDeg * 1 / 2;
@@ -94,7 +93,7 @@ function PhaseLines({ sunriseHourAngleDeg }:
     );
 }
 
-const stageLineImage: ClockImage = { imageSrc: stageLine, className: styles.stage };
+const stageLineImage: ClockImage = { imageSrc: stageLine, zIndex: 1 };
 function StageLines({ sunriseHourAngleDeg }:
     { sunriseHourAngleDeg: number }): JSX.Element {
     const dayInterStageAngleDeg = -sunriseHourAngleDeg / 6;
@@ -124,10 +123,10 @@ function StageLines({ sunriseHourAngleDeg }:
     );
 }
 
-const morningLabelImage: ClockImage = { imageSrc: morningLabel, className: styles.label };
-const forenoonLabelImage: ClockImage = { imageSrc: forenoonLabel, className: styles.label };
-const afternoonLabelImage: ClockImage = { imageSrc: afternoonLabel, className: styles.label };
-const eveningLabelImage: ClockImage = { imageSrc: eveningLabel, className: styles.label };
+const morningLabelImage: ClockImage = { imageSrc: morningLabel, zIndex: 1 };
+const forenoonLabelImage: ClockImage = { imageSrc: forenoonLabel, zIndex: 1 };
+const afternoonLabelImage: ClockImage = { imageSrc: afternoonLabel, zIndex: 1 };
+const eveningLabelImage: ClockImage = { imageSrc: eveningLabel, zIndex: 1 };
 function DayLabels({ sunriseHourAngleDeg }:
     { sunriseHourAngleDeg: number }): JSX.Element {
     const morningLabelHourAngleDeg = sunriseHourAngleDeg * 3 / 4;
@@ -142,10 +141,10 @@ function DayLabels({ sunriseHourAngleDeg }:
     );
 }
 
-const firstWatchLabelImage: ClockImage = { imageSrc: firstWatchLabel, className: styles.label };
-const secondWatchLabelImage: ClockImage = { imageSrc: secondWatchLabel, className: styles.label };
-const thirdWatchLabelImage: ClockImage = { imageSrc: thirdWatchLabel, className: styles.label };
-const fourthWatchLabelImage: ClockImage = { imageSrc: fourthWatchLabel, className: styles.label };
+const firstWatchLabelImage: ClockImage = { imageSrc: firstWatchLabel, zIndex: 1 };
+const secondWatchLabelImage: ClockImage = { imageSrc: secondWatchLabel, zIndex: 1 };
+const thirdWatchLabelImage: ClockImage = { imageSrc: thirdWatchLabel, zIndex: 1 };
+const fourthWatchLabelImage: ClockImage = { imageSrc: fourthWatchLabel, zIndex: 1 };
 function NightLabels({ sunriseHourAngleDeg }:
     { sunriseHourAngleDeg: number }): JSX.Element {
     const firstWatchLabelHourAngleDeg = -sunriseHourAngleDeg * 3 / 4 + 45;
@@ -161,7 +160,7 @@ function NightLabels({ sunriseHourAngleDeg }:
     );
 }
 
-const timeHandImage: ClockImage = { imageSrc: timeHand, className: styles.hand };
+const timeHandImage: ClockImage = { imageSrc: timeHand, zIndex: 5 };
 const TimeHand = ({ solarHourAngleDeg }:
     { solarHourAngleDeg: number }): JSX.Element => (
     <RotatingImage image={timeHandImage} rotationAngleDeg={solarHourAngleDeg} />
@@ -175,7 +174,7 @@ export default function SolarClock({ civilTimeOffsetAngleDeg = 0, solsticeSunris
 }) {
 
     return (
-        <div className={styles.solarClock}>
+        <Box position='relative' aspectRatio='1/1' overflow='hidden'>
             <ClockFrame />
 
             <CivilClock civilTimeOffsetAngleDeg={civilTimeOffsetAngleDeg} />
@@ -188,6 +187,6 @@ export default function SolarClock({ civilTimeOffsetAngleDeg = 0, solsticeSunris
             <NightLabels sunriseHourAngleDeg={sunriseHourAngleDeg} />
 
             <TimeHand solarHourAngleDeg={solarHourAngleDeg} />
-        </div>
+        </Box>
     );
 }

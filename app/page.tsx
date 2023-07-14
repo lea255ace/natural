@@ -2,9 +2,9 @@
 
 import Config from 'components/config';
 import Clock from 'components/clock';
-import styles from './index.module.css';
 import { useConfigContext } from 'context/configProvider';
 import { useState, useEffect } from 'react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import astro_algo from '@lea255ace/astro_algo';
 
 export default function Home() {
@@ -38,15 +38,21 @@ export default function Home() {
     }, []);
 
     return (
-        <div className={styles.container}>
-            <Clock
-                className={styles.clock}
-                civilTimeMinutes={(currentDate.getHours() * 60) + currentDate.getMinutes()}
-                civilTimeOffsetMinutes={timeOffsetMinutes}
-                currentDaylightMinutes={daylightMinutes}
-                maxDaylightMinutes={solsticeDaylightMinutes}
-            />
-            <Config className={styles.config} />
-        </div>
+        <Grid
+            templateColumns='auto 800px 50px 400px auto'
+            templateRows='200px 500px'
+        >
+            <GridItem colStart={2} rowStart={1} rowEnd={3}>
+                <Clock
+                    civilTimeMinutes={(currentDate.getHours() * 60) + currentDate.getMinutes()}
+                    civilTimeOffsetMinutes={timeOffsetMinutes}
+                    currentDaylightMinutes={daylightMinutes}
+                    maxDaylightMinutes={solsticeDaylightMinutes}
+                />
+            </GridItem>
+            <GridItem colStart={4} rowStart={2}>
+                <Config />
+            </GridItem>
+        </Grid>
     );
 }
