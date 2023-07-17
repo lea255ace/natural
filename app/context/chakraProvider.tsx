@@ -11,6 +11,16 @@ const theme = extendTheme( {
         body: `Times New Roman, ${base.fonts?.body}`,
     },
     components: {
+        Container: {
+            variants: {
+                outline: {
+                    border: '2px',
+                    borderRadius: '10px',
+                    borderColor: 'gray.400',
+                    p: '4'
+                }
+            }
+        },
         Heading: {
             baseStyle: {
                 marginTop: '8',
@@ -21,6 +31,12 @@ const theme = extendTheme( {
             baseStyle: {
                 fontWeight: 'normal',
                 fontFamily: 'Arial',
+            }
+        },
+        Link: {
+            baseStyle: {
+                textColor: 'purple.500',
+                textDecoration: 'underline'
             }
         }
     }

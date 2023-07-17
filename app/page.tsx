@@ -1,58 +1,40 @@
 'use client';
 
-import Config from 'components/config';
-import Clock from 'components/clock';
-import { useConfigContext } from 'context/configProvider';
-import { useState, useEffect } from 'react';
-import { Grid, GridItem } from '@chakra-ui/react';
-import astro_algo from '@lea255ace/astro_algo';
+import { Link } from '@chakra-ui/next-js';
+import {
+    Container,
+    Text,
+    Heading,
+    UnorderedList,
+    ListItem,
+    VStack,
+    Stack
+} from '@chakra-ui/react';
 
 export default function Home() {
-    const initialDate = new Date();
-    const {configValues} = useConfigContext();
-    const [currentDate, setCurrentDate] = useState(initialDate);
-
-    const declination = astro_algo.calculateDeclinationRadians(initialDate);
-    const eqTime = astro_algo.calculateEqTimeMinutes(initialDate);
-
-    //NB: Date.getTimezoneOffset returns an offset in minutes, with the opposite sign as the timezone.
-    const timeOffsetMinutes = eqTime + 4 * configValues.longitude + initialDate.getTimezoneOffset();
-
-    const sunriseHourAngleDegrees = astro_algo.calculateSunriseHourAngleDegrees(configValues.latitude, declination);
-    //const sunriseTimeMinutes = 720 - 4 * (configValues.longitude + sunriseHourAngleDegrees) - eqTime;
-    //const sunsetTimeMinutes = 720 - 4 * (configValues.longitude - sunriseHourAngleDegrees) - eqTime;
-    const daylightMinutes = 8 * sunriseHourAngleDegrees;
-
-    const summerSolsticeDate = astro_algo.calculateQuarterDayForYear(astro_algo.QuarterDays.SummerSolstice, currentDate.getFullYear());
-    const solsticeDeclination = astro_algo.calculateDeclinationRadians(summerSolsticeDate);
-    const solsticeSunriseHourAngleDegrees = astro_algo.calculateSunriseHourAngleDegrees(configValues.latitude, solsticeDeclination);
-    const solsticeDaylightMinutes = 8 * solsticeSunriseHourAngleDegrees;
-
-    // TODO(MW): Could this be pushed down into the Clock component to allow this file to be a server component?
-    useEffect(() => {
-        const tick = setInterval(() => {
-            const currentDate = new Date();
-            setCurrentDate(currentDate);
-        }, 1000);
-        return () => clearInterval(tick);
-    }, []);
-
     return (
-        <Grid
-            templateColumns='auto 800px 50px 400px auto'
-            templateRows='200px 500px'
-        >
-            <GridItem colStart={2} rowStart={1} rowEnd={3}>
-                <Clock
-                    civilTimeMinutes={(currentDate.getHours() * 60) + currentDate.getMinutes()}
-                    civilTimeOffsetMinutes={timeOffsetMinutes}
-                    currentDaylightMinutes={daylightMinutes}
-                    maxDaylightMinutes={solsticeDaylightMinutes}
-                />
-            </GridItem>
-            <GridItem colStart={4} rowStart={2}>
-                <Config />
-            </GridItem>
-        </Grid>
+        <VStack mx='4' my='4'>
+            <Heading as='h1' size='2xl'>Natural Time</Heading>
+            <Stack spacing='8' direction={['column', null, 'row']}>
+                <Container variant='outline' maxWidth={['430px', null, '500px']}>
+                    <Heading as='h3' size='md' marginTop='0'>About</Heading>
+                    <Text>
+                        Natural time is an ongoing attempt to re-frame the way I think about time,
+                        and to better connect the passage of time with the motion of the Sun, Moon, and stars,
+                        from which it was originally derived.
+                    </Text>
+                    <br />
+                    <Text>You can find a more detailed overview on the <Link href='/about'>About page</Link>.</Text>
+                </Container>
+                <Container variant='outline' maxWidth={['275px']}>
+                    <Heading as='h3' size='md' marginTop='0'>Links</Heading>
+                    <Text>Check out the following links to explore the available tools!</Text>
+                    <UnorderedList listStylePos='inside' marginTop='2'>
+                        <ListItem><Link href='/dashboard' fontFamily='mono'>Dashboard</Link></ListItem>
+                        <ListItem><Link href='/solar_clock' fontFamily='mono'>Solar Clock</Link></ListItem>
+                    </UnorderedList>
+                </Container>
+            </Stack>
+        </VStack>
     );
 }
