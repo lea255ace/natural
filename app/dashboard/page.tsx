@@ -1,17 +1,11 @@
 'use client';
 
 import Config from 'components/config';
-import SolarClock from 'components/solar_clock';
-import styles from './mobile.module.css';
-import Moment from 'types/moment';
-import { MomentLabel, MomentMinutes } from  'components/moment';
-import * as Constant from 'types/constants';
+import Clock from 'components/clock';
 import { useConfigContext } from 'context/configProvider';
 import { useState, useEffect } from 'react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import astro_algo from '@lea255ace/astro_algo';
-
-const MINUTES_PER_DAY = 1440;
-const DEGREES_PER_MINUTE = 360 / MINUTES_PER_DAY;
 
 export default function Home() {
     const initialDate = new Date();
@@ -43,35 +37,22 @@ export default function Home() {
         return () => clearInterval(tick);
     }, []);
 
-    const civilTimeMinutes = (currentDate.getHours() * 60) + currentDate.getMinutes();
-    const civilTimeHourAngleDeg = ((civilTimeMinutes + timeOffsetMinutes) / MINUTES_PER_DAY - 0.5) * 360;
-    const sunriseHourAngleDeg = (daylightMinutes / MINUTES_PER_DAY) * -180;
-    const solsticeSunriseHourAngleDeg = (solsticeDaylightMinutes / MINUTES_PER_DAY) * -180;
-    const civilTimeOffsetAngleDeg = timeOffsetMinutes * DEGREES_PER_MINUTE;
-
-    let trueSolarTime = civilTimeMinutes + timeOffsetMinutes;
-    if (trueSolarTime < 0) {
-        trueSolarTime += Constant.MINUTES_PER_DAY;
-    } else if (trueSolarTime >= Constant.MINUTES_PER_DAY) {
-        trueSolarTime -= Constant.MINUTES_PER_DAY;
-    }
-    const moment = new Moment({ daylightMinutes: daylightMinutes, solarTimeMinutes: trueSolarTime });
-
     return (
-        <div className={styles.container}>
-            <div className={styles.clock}>
-                <SolarClock
-                    civilTimeOffsetAngleDeg={civilTimeOffsetAngleDeg}
-                    solsticeSunriseHourAngleDeg={solsticeSunriseHourAngleDeg}
-                    sunriseHourAngleDeg={sunriseHourAngleDeg}
-                    solarHourAngleDeg={civilTimeHourAngleDeg}
+        <Grid
+            templateColumns='auto 800px 50px 400px auto'
+            templateRows='200px 500px'
+        >
+            <GridItem colStart={2} rowStart={1} rowEnd={3}>
+                <Clock
+                    civilTimeMinutes={(currentDate.getHours() * 60) + currentDate.getMinutes()}
+                    civilTimeOffsetMinutes={timeOffsetMinutes}
+                    currentDaylightMinutes={daylightMinutes}
+                    maxDaylightMinutes={solsticeDaylightMinutes}
                 />
-            </div>
-            <div>
-                <MomentLabel className={styles.moment} momentString={moment.momentName()} />
-                <MomentMinutes className={styles.rem} minutesElapsed={Math.floor(moment.currentStageMinutesElapsed())} minutesTotal={Math.floor(moment.currentStageMinutesTotal())} />
-            </div>
-            <Config className={styles.config} />
-        </div>
+            </GridItem>
+            <GridItem colStart={4} rowStart={2}>
+                <Config />
+            </GridItem>
+        </Grid>
     );
 }

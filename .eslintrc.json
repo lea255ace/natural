@@ -1,17 +1,28 @@
 {
-  "plugins": ["@typescript-eslint"],
   "extends": [
     "eslint:recommended",
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended"
   ],
-  "parserOptions": {
-    "warnOnUnsupportedTypeScriptVersion": false
-  },
-  "rules": {
-    "indent": ["warn", 4],
-    "quotes": ["warn", "single"],
-    "linebreak-style": ["error", "unix"],
-    "semi": ["error", "always"]
-  }
+  "overrides": [
+    {
+      "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+      "parserOptions": {
+        "warnOnUnsupportedTypeScriptVersion": false
+      },
+      "rules": {
+        "indent": ["warn", 4],
+        "quotes": ["warn", "single"],
+        "linebreak-style": ["error", "unix"],
+        "semi": ["error", "always"]
+      }
+    },
+    {
+      "files": ["*.md", "*.mdx"],
+      "extends": ["plugin:mdx/recommended"],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
 }
