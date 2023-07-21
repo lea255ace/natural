@@ -1,17 +1,151 @@
+import Annotation from 'components/annotation.tsx'
+import { Text, Box, Image } from '@chakra-ui/react';
+import { Link } from '@chakra-ui/next-js';
+
 # Natural Time
-Natural time is an ongoing attempt to re-frame the way I think about time,
-and to better connect the passage of time with the motion of the Sun, Moon, and stars,
-from which it was originally derived.
+Natural time is an ongoing attempt to re-frame the way I think about time, and to better connect the passage of time
+with the motion of the Sun, Moon, and stars, from which it was originally derived.
 
 ## Background
-Prior to the advent of accurate timepieces, the time of day was determined according to the position of the Sun. As the
-Earth moves around the Sun, the length of each day changes; due to the Earth's angle and elliptical orbit, the rate of
-change of the day length over the course of the year is non-uniform.
+Prior to the advent of accurate timepieces, the time of day was determined according to the position of the Sun.
+Midday is defined as the point when the Sun reaches the highest point of its arc from East to West.{a1}
+From there, the 360&deg; of rotation is divided into twenty-four 15&deg; increments corresponding with
+the hours of the day; 11:00 am is the time at which the Sun is 15&deg; East of its position at midday.
+In this way, the time of day is determined by the position of the Sun, rather than the time of day existing unto itself
+and the motion of the Sun being projected onto that scale. Under a solar time system, it is redundant to ask 'Where will
+the Sun be at 11:00 am?'--or at any other time--becuase the time of 11:00 am is *defined by* the Sun reaching the
+position assigned to 11:00 am.
 
-Civil time, which is what we are familiar with, relies on an approximation of the Sun taken to have uniform motion over
-the course of the year. As a result, civil time and true solar time rarely agree, with the difference being given by the
-[Equation of Time](https://en.wikipedia.org/wiki/Equation_of_time).
+export const a1 = <Annotation trigger='1' body="This is also the point where the Sun's observed position is due South."/>
 
-The civil time that we are used to uses units of fixed length -- an hour is the same amount of time in summer as in
-winter -- but this was not universal among historical time systems. Often, the day and night would each be allocated a
-fixed number of hours, the length of which would vary depending on the amount of daylight at that time of year.
+## Atomic measurements
+Today, the second is an SI unit defined according to the observed oscillation frequency of a Cesium atom.{a2} From these
+observations we derive International Atomic Time (TAI), a coordinated time standard denoting the observed passage of
+time on Earth.{a3} Over time TAI drifts from observed solar time,{a4} so there is a different coordinated time standard
+which underpins modern life, Coordinated Universal Time (UTC). UTC is derived by taking TAI and offsetting it by an
+integer number of leap seconds to keep it from drifting too far from observed solar noon at 0&deg; latitude (the prime
+meridian).
+
+You would be forgiven for thinking that UTC, given the precision with which it is maintained, always provides an
+accurate representation of the time of day.  For reasons we will get to, this is actually quite far from the truth!
+But first, a further digression on how we have historically thought about time.
+
+export const a2 = <Annotation trigger='2'
+                    body='Second (SI): The second [...] is defined by taking the fixed numerical value of the caesium
+                          frequency, ΔνCs, the unperturbed ground-state hyperfine transition frequency of the caesium
+                          133 atom, to be 9,192,631,770 when expressed in the unit Hz, which is equal to s−1.'
+                    />
+export const a3 = <Annotation trigger='3' body={<Text>
+                        More correctly, time on the <em>geoid</em>, a gravitationally equipotential surface representing
+                        sea level at any given point. Otherwise, time dilation would skew measurements taken in different
+                        places.
+                    </Text>}/>
+export const a4 = <Annotation trigger='4'
+                    body='This is primarily a result of the slowing rotation of the Earth due to tidal forces.'/>
+
+## Historical Time Systems
+As the Earth moves around the Sun, the amount of daylight varies throughout the year due to the tilt of Earth's axis.
+The rate of change of daylight hours is non-uniform over the year,{a5} changing the most from day-to-day at the Spring
+and Fall equinoxes and the least at the Summer and Winter solstices.{a6}
+
+Civil time, which is the time system that we are familiar with, uses units of fixed length--an hour is the same amount
+of time in Summer as in Winter--but this was not universal among historical time systems. Often, the day and night
+would each be allocated a fixed number of hours, the length of which would vary depending on the amount of daylight at
+that time of year. In addition, a 'day' was generally figured from one midday to the next, rather than our current
+system of midnight to midnight.
+
+You may notice that a trend is emerging of things being defined in terms of solar noon. Why might that be? Why is noon
+more special than any of the other 23 hours of the day? And here we arrive at the first hint at the lie that is civil
+time: **a day is not uniformly 24 hours long**. While we think of a day as 'one revolution of the Earth', the Earth is
+moving through its orbit at the same time it is rotating. So, when it has rotated a full 360&deg;, it has also advanced
+a bit and the observed Sun will be a bit East of where it was at the same 'time' yesterday; the Earth needs to rotate
+360&deg; *and then a bit more* in order for the Sun to return to its zenith and reach solar noon.
+
+In fact, the length of time from one observed solar noon to the next varies about 24 hours{a7} by as much as 30 seconds
+longer to 20 seconds shorter over the course of the year. You may be wondering, how on Earth{a8} did we sweep that
+under the rug of our civil time system to the point that the average person has no clue about it?
+
+export const a5 = <Annotation trigger='5'
+                    body="Due to a combination of the obliquity of the ecliptic and the eccentricity of Earth's orbit."
+                    />
+export const a6 = <Annotation trigger='6'
+                    body='This is why it feels like days stay the same length for a while, then seem to get
+                          shorter/longer all of a sudden. They do!'
+                    />
+export const a7 = <Annotation trigger='7'
+                    body="Again due to Earth's obliquity and eccentricity, the amount that the Sun moves Eastward and
+                          therefore the amount of time the Earth must turn from noon to noon varies over the year."
+                    />
+export const a8 = <Annotation trigger='8' body='Pun intended.'/>
+
+## Mechanization and the Mean Sun
+
+The deeper you dig into the celestial movements that actually create our experience of time, the messier things get.
+Our neat, tidy civil time system is a tablecloth thrown over the vagaries of the physical world, and the lynchpin of the
+illusion is the **Mean Sun**. Rather than attempt to model the irregular motion of the Sun,{a9} civil time models
+an abstraction which is smipler and more predictable. The Mean Sun is a virtual Sun taken to have the same orbital
+period as the apparent Sun,{a10} but with an orbital velocity equal to the yearly average velocity of the apparent
+Sun.{a11} Therefore, the daily Eastward motion of the Mean Sun does not vary, and the length of a mean solar day is a
+constant 24 hours all through the year.
+
+The discrepancy between a varying and constant orbital velocity causes the apparent Sun to lag and lead the Mean Sun
+in turns over the course of a year, and civil noon may differ from solar noon by ~15 minutes in either direction
+at various points of the year. To account for this we turn to the
+<Link href='https://en.wikipedia.org/wiki/Equation_of_time'>Equation of Time</Link>, which is a periodic function
+describing this difference with respect to the day of the year.
+
+<Box boxSize={['250px', '400px']} mx='auto'>
+    <Image src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Equation_of_time.svg/1280px-Equation_of_time.svg.png'
+        alt='Graph of the Equation of Time'
+    />
+    <Text align='center' marginTop='-2'>Graph of the Equation of Time</Text>
+    <Text align='center' size='sm' color='gray.400'>
+        Source:{' '}
+        <Link href='https://en.wikipedia.org/wiki/Equation_of_time#/media/File:Equation_of_time.svg'
+            color='gray.400'>Wikipedia</Link>
+    </Text>
+</Box>
+
+This may seem strange and convoluted--and it is!--but there is a good reason why our time system relies on an idealized
+abstraction of the Sun. To wit, accurately representing apparent solar time using eighteenth-century technology 
+required additional components and increased manufacturing complexity.{a12} The relative simplicity of modeling mean
+solar time gave it an edge as precision clock and watches became widely adopted, leading to the ubiquity of our
+current system.
+
+export const a9 = <Annotation trigger='9'
+                    body="Obviously, the observed motion of the Sun is actually a result of the Earth's orbit around
+                    the Sun. However, it is often useful to adopt a geocentric model, which I will do going forward."
+                    />
+export const a10 = <Annotation trigger='10' body={<Text>
+                        The <Link href='https://en.wikipedia.org/wiki/Solar_time#Apparent_solar_time'>
+                        Wikipedia page</Link> on this contains the following line, which reads like something out of a
+                        D&D manual: &lsquo;The apparent sun is the true sun as seen by an observer on Earth.&rsquo;
+                    </Text>}/>
+export const a11 = <Annotation trigger='11'
+                    body='The Mean Sun is also taken to exist on the celestial Equator rather than the ecliptic.'
+                    />
+export const a12 = <Annotation trigger='12'
+                    body="However, it was done! 'Equation Clocks' included components to model the Equation of Time and
+                    either show it separately or incorporate it into the displayed time."
+                    />
+
+## What time is it?
+
+So, you may be asking, what's the point of all this? Why does it matter that we use mean time instead of apparent time?
+What difference does it make that we model each day as being the same length?
+
+Have you ever said 'Good morning!' to someone, only to think 'Actually I guess it's not morning anymore, it's
+afternoon.' But it just really didn't *feel* like afternoon? Well, that's because **it probably wasn't**. Take
+the Equation of Time, sprinkle in Daylight Savings and longitudinal deviation from the standard time of your Time Zone,
+and apparent solar noon can be as late as **1:30 PM**. We've been using exclusively mean civil time since we learned
+to read clocks, and yet we are so attuned to the motion of the Sun that we get mixed up when civil time disagrees with
+apparent solar time.
+
+We are wired to connect with the motion of the Sun, Moon, and stars, as we have been doing for millenia, but our modern
+time system severs this connection. We are used to thinking in civil time, and imposing it on celestial motion. But
+celestial motion *is* time. The Mean Sun approximation is a relic of the technological path we took to get here, but
+we have surpassed that model and can define elapsed time precisely using only atomic observation.
+
+My aim with this project is to re-examine how we think about time at the human level, and whether we can devise a time
+system that maintains all of the benefits we have realized in precision and coordination while getting us more in touch
+with the physical reality around us.
