@@ -18,7 +18,7 @@
     "@mdx-js/react": "^2.3.0",
     "@next/mdx": "^13.4.8",
     "framer-motion": "^10.12.18",
-    "next": "latest",
+    "next": ">=13.4.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "remark-cli": "^11.0.0",

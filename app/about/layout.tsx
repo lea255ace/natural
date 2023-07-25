@@ -14,7 +14,6 @@ export default function SubPageLayout({ children }) {
                 <BreadcrumbItem>
                     <BreadcrumbLink as={Link} href='/'>Home</BreadcrumbLink>
                 </BreadcrumbItem>
-
                 <BreadcrumbItem isCurrentPage>
                     <BreadcrumbLink>About</BreadcrumbLink>
                 </BreadcrumbItem>
