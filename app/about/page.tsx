@@ -6,7 +6,7 @@ import { Box } from '@chakra-ui/react';
 import About from 'about/about.mdx';
 
 export default function Page() {
-    return <Box maxWidth='800px' mx='auto' px='8' py='2'>
+    return <Box maxWidth='800px' mx='auto' px='8' paddingTop='2' paddingBottom='16'>
         <About />
     </Box>;
 }

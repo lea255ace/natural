@@ -1,4 +1,5 @@
 import nextMdx from '@next/mdx';
+import smartypants from 'remark-smartypants';
 
 //TODO(MW): This could be moved into .env.production and .env.development?
 //          As per: https://nextjs.org/docs/app/building-your-application/configuring/environment-variables
@@ -19,7 +20,11 @@ const nextConfig = {
 
 const withMDX = nextMdx({
     options: {
-        remarkPlugins: [],
+        remarkPlugins: [
+            [smartypants, {
+                ellipses: false
+            }]
+        ],
         target: 'serverless'
     }
 });
