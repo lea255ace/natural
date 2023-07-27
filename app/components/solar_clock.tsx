@@ -4,6 +4,7 @@ import { Box } from '@chakra-ui/react';
 
 import clockFrame from '/public/Clock Frame.png';
 import civilClock from '/public/Civil Clock.png';
+import midLines from '/public/Mid Lines.png';
 import solsticeLine from '/public/Solstice Line.png';
 import sunLine from '/public/Sun Line.png';
 import phaseLine from '/public/Phase Line.png';
@@ -17,6 +18,9 @@ import secondWatchLabel from '/public/Second Watch Label.png';
 import thirdWatchLabel from '/public/Third Watch Label.png';
 import fourthWatchLabel from '/public/Fourth Watch Label.png';
 import timeHand from '/public/Time Hand.png';
+import stageTimer from '/public/Stage Timer.png';
+import stageMarker from '/public/Stage Marker.png';
+import stageHand from '/public/Stage Hand.png';
 
 type ClockImage = {
     imageSrc: StaticImageData
@@ -45,6 +49,11 @@ const ClockFrame = (): JSX.Element => (
         alt=''
         style={{ zIndex: 2 }}
     />
+);
+
+const midLinesImage: ClockImage = { imageSrc: midLines, zIndex: 1 };
+const MidLines = ({ isNight }: { isNight: boolean }): JSX.Element => (
+    <RotatingImage image={midLinesImage} rotationAngleDeg={isNight ? 180: 0} />
 );
 
 const civilClockImage: ClockImage = { imageSrc: civilClock, zIndex: 4 };
@@ -166,16 +175,52 @@ const TimeHand = ({ solarHourAngleDeg }:
     <RotatingImage image={timeHandImage} rotationAngleDeg={solarHourAngleDeg} />
 );
 
-export default function SolarClock({ civilTimeOffsetAngleDeg = 0, solsticeSunriseHourAngleDeg = -120, sunriseHourAngleDeg = -90, solarHourAngleDeg = 0 }: {
+const StageTimer = (): JSX.Element => (
+    <Image
+        src={stageTimer}
+        fill={true}
+        alt=''
+        style={{ zIndex: 3 }}
+    />
+);
+
+const stageMarkerImage: ClockImage = { imageSrc: stageMarker, zIndex: 4 };
+const StageMarker = ({ stageMarkerAngleDeg }: { stageMarkerAngleDeg: number }): JSX.Element => (
+    <RotatingImage image={stageMarkerImage} rotationAngleDeg={stageMarkerAngleDeg} />
+);
+
+const stageHandImage: ClockImage = { imageSrc: stageHand, zIndex: 5 };
+const StageHand = ({ stageHandAngleDeg }: { stageHandAngleDeg: number }): JSX.Element => (
+    <RotatingImage image={stageHandImage} rotationAngleDeg={stageHandAngleDeg} />
+);
+
+function StageHighlight({ stageHandAngleDeg }: { stageHandAngleDeg: number }): JSX.Element {
+    const xPos = 65 + 55 * Math.sin(stageHandAngleDeg * Math.PI / 180);
+    const yPos = 65 - 55 * Math.cos(stageHandAngleDeg * Math.PI / 180);
+    const pathStr = 'M 65 65 L 65 10 A 55 55 0 ' + (stageHandAngleDeg >= 0 && stageHandAngleDeg < 180 ? '1' : '0') + ' 0 ' + xPos + ' ' + yPos;
+    return (
+        <svg width='100%' height='100%'>
+            <svg viewBox='0 0 130 130'>
+                <circle cx='65' cy='65' r='55' fill={stageHandAngleDeg >=0 ? 'transparent' : '#ccccff'} />
+                <path d={pathStr} fill={stageHandAngleDeg >= 0 ? '#ccccff' : '#ff9999'}/>
+            </svg>
+        </svg>
+    );
+}
+
+export default function SolarClock({ civilTimeOffsetAngleDeg = 0, solsticeSunriseHourAngleDeg = -120, sunriseHourAngleDeg = -90, solarHourAngleDeg = 0, stageHandAngleDeg = 0 }: {
     civilTimeOffsetAngleDeg: number
     solsticeSunriseHourAngleDeg: number
     sunriseHourAngleDeg: number
     solarHourAngleDeg: number
+    stageHandAngleDeg: number
 }) {
 
+    const isNight: boolean = solarHourAngleDeg < sunriseHourAngleDeg || solarHourAngleDeg >= -sunriseHourAngleDeg;
     return (
         <Box position='relative' aspectRatio='1/1' overflow='hidden'>
             <ClockFrame />
+            <MidLines isNight={isNight} />
 
             <CivilClock civilTimeOffsetAngleDeg={civilTimeOffsetAngleDeg} />
 
@@ -187,6 +232,13 @@ export default function SolarClock({ civilTimeOffsetAngleDeg = 0, solsticeSunris
             <NightLabels sunriseHourAngleDeg={sunriseHourAngleDeg} />
 
             <TimeHand solarHourAngleDeg={solarHourAngleDeg} />
+
+            <Box position='relative' width='10%' height='10%' mx='auto' marginTop={isNight ? '20%' : '70.75%'}>
+                <StageTimer />
+                <StageMarker stageMarkerAngleDeg={(isNight ? -1 : 1) * (1 + sunriseHourAngleDeg / 90) * 360} />
+                <StageHand stageHandAngleDeg={stageHandAngleDeg} />
+                <StageHighlight stageHandAngleDeg={stageHandAngleDeg} />
+            </Box>
         </Box>
     );
 }

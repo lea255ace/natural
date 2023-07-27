@@ -25,13 +25,13 @@ export default function Clock({civilTimeMinutes=720, civilTimeOffsetMinutes=0, c
         trueSolarTime -= Constant.MINUTES_PER_DAY;
     }
     const moment = new Moment({ daylightMinutes: currentDaylightMinutes, solarTimeMinutes: trueSolarTime });
+    const stageHandAngleDeg = (1 - (moment.currentStageMinutesTotal() - moment.currentStageMinutesElapsed()) / 60) * 360;
 
     return (
         <>
-            <SolarClock civilTimeOffsetAngleDeg={civilTimeOffsetAngleDeg} solsticeSunriseHourAngleDeg={solsticeSunriseHourAngleDeg} sunriseHourAngleDeg={sunriseHourAngleDeg} solarHourAngleDeg={civilTimeHourAngleDeg} />
+            <SolarClock civilTimeOffsetAngleDeg={civilTimeOffsetAngleDeg} solsticeSunriseHourAngleDeg={solsticeSunriseHourAngleDeg} sunriseHourAngleDeg={sunriseHourAngleDeg} solarHourAngleDeg={civilTimeHourAngleDeg} stageHandAngleDeg={stageHandAngleDeg}/>
             <Text align='center' fontSize='2xl' marginTop='-16'><Highlight query={moment.momentName()} styles={{ fontWeight: 'bold' }}>{'The current moment is ' + moment.momentName()}</Highlight></Text>
-            <Text align='center' fontSize='xl' marginTop='2'>There are {Math.floor(moment.currentStageMinutesElapsed())} minutes elapsed in the {Math.floor(moment.currentStageMinutesTotal())} minute stage</Text>
-            <Text align='center' marginTop='2'>The current civil time is: {String(Math.floor(civilTimeMinutes/60)).padStart(2, '0')}:{String(civilTimeMinutes%60).padStart(2, '0')}</Text>
+            <Text align='center' fontSize='lg' marginTop='2'>The current civil time is: {String(Math.floor(civilTimeMinutes/60)).padStart(2, '0')}:{String(civilTimeMinutes%60).padStart(2, '0')}</Text>
         </>
     );
 }
