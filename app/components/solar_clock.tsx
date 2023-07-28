@@ -62,7 +62,13 @@ const CivilClock = ({ civilTimeOffsetAngleDeg }:
     <RotatingImage image={civilClockImage} rotationAngleDeg={civilTimeOffsetAngleDeg} />
 );
 
-//TODO(MW): Adjust image orientations so hour angle can be used directly, removing the +90 offset (+180 for time hand).
+const ClockFaceColors = (): JSX.Element => (
+    <svg width='100%' height='100%'>
+        <circle cx='50%' cy='50%' r='35%' strokeWidth='0' fill='#ffffff' />
+        <circle cx='50%' cy='50%' r='17.5%' strokeWidth='0' fill='#f0f0f0' />
+    </svg>
+);
+
 const solsticeLineImage: ClockImage = { imageSrc: solsticeLine, zIndex: 1 };
 function SolsticeLines({ solsticeSunriseHourAngleDeg }:
     { solsticeSunriseHourAngleDeg: number }): JSX.Element {
@@ -201,7 +207,7 @@ function StageHighlight({ stageHandAngleDeg }: { stageHandAngleDeg: number }): J
     return (
         <svg width='100%' height='100%'>
             <svg viewBox='0 0 130 130'>
-                <circle cx='65' cy='65' r='55' fill={stageHandAngleDeg >=0 ? 'transparent' : '#ccccff'} />
+                <circle cx='65' cy='65' r='55' fill={stageHandAngleDeg >=0 ? '#f8f8f8' : '#ccccff'} />
                 <path d={pathStr} fill={stageHandAngleDeg >= 0 ? '#ccccff' : '#ff9999'}/>
             </svg>
         </svg>
@@ -221,8 +227,10 @@ export default function SolarClock({ civilTimeOffsetAngleDeg = 0, solsticeSunris
         <Box position='relative' aspectRatio='1/1' overflow='hidden'>
             <ClockFrame />
             <MidLines isNight={isNight} />
-
             <CivilClock civilTimeOffsetAngleDeg={civilTimeOffsetAngleDeg} />
+            <Box position='absolute' width='100%' height='100%'>
+                <ClockFaceColors />
+            </Box>
 
             <SolsticeLines solsticeSunriseHourAngleDeg={solsticeSunriseHourAngleDeg} />
             <SunLines sunriseHourAngleDeg={sunriseHourAngleDeg} />
@@ -233,7 +241,7 @@ export default function SolarClock({ civilTimeOffsetAngleDeg = 0, solsticeSunris
 
             <TimeHand solarHourAngleDeg={solarHourAngleDeg} />
 
-            <Box position='relative' width='10%' height='10%' mx='auto' marginTop={isNight ? '20%' : '70.75%'}>
+            <Box position='relative' width='8%' height='8%' mx='auto' marginTop={isNight ? '21%' : '71.75%'}>
                 <StageTimer />
                 <StageMarker stageMarkerAngleDeg={(isNight ? -1 : 1) * (1 + sunriseHourAngleDeg / 90) * 360} />
                 <StageHand stageHandAngleDeg={stageHandAngleDeg} />
