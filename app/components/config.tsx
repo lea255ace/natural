@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ConfigParameters, useConfigContext } from 'context/configProvider';
-import { Box, Input, FormLabel, FormControl, Button, Text } from '@chakra-ui/react';
+import { Box, HStack, VStack, Input, FormLabel, FormControl, Button, Text } from '@chakra-ui/react';
 
 type DisplayedParameters = {
     latitude: string;
@@ -33,21 +33,27 @@ export default function Config() {
     }, [configValues]);
 
     return (
-        <Box marginLeft='6' marginRight='6'>
+        <Box>
             <form onSubmit={updateConfigValues}>
-                <FormControl>
-                    <FormLabel>Latitude:
-                        <Input name='latitude' value={displayedValues.latitude}
-                            onChange={e => setDisplayedValues({...displayedValues, latitude: e.target.value})}
-                        />
-                    </FormLabel>
-                    <FormLabel>Longitude:
-                        <Input name='longitude' value={displayedValues.longitude}
-                            onChange={e => setDisplayedValues({...displayedValues, longitude: e.target.value})}
-                        />
-                    </FormLabel>
-                </FormControl>
-                <Button type='submit' size='sm' variant='outline'>Update</Button>
+                <VStack width='fit-content' align='center'>
+                    <FormControl>
+                        <HStack>
+                            <FormLabel maxWidth='80px' textAlign='center'>Latitude
+                                <Input name='latitude' textAlign='center'
+                                    value={displayedValues.latitude}
+                                    onChange={e => setDisplayedValues({...displayedValues, latitude: e.target.value})}
+                                />
+                            </FormLabel>
+                            <FormLabel maxWidth='80px' textAlign='center' mx='0'>Longitude
+                                <Input name='longitude' textAlign='center'
+                                    value={displayedValues.longitude}
+                                    onChange={e => setDisplayedValues({...displayedValues, longitude: e.target.value})}
+                                />
+                            </FormLabel>
+                        </HStack>
+                    </FormControl>
+                    <Button type='submit' size='sm'>Update</Button>
+                </VStack>
             </form>
             <br/>
             <Text>Current Latitude: {Math.abs(configValues.latitude) + ' ' + ((configValues.latitude > 0) ? 'N' : 'S')}</Text>
