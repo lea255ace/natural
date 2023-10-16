@@ -2,31 +2,13 @@
 
 import Config from 'components/config';
 import Clock from 'components/clock';
-import { useConfigContext } from 'context/configProvider';
+import { AstrolabeProvider } from 'context/astrolabeProvider';
 import { useState, useEffect } from 'react';
-import { Stack, Center } from '@chakra-ui/react';
-import astro_algo from '@lea255ace/astro_algo';
+import { Stack } from '@chakra-ui/react';
 
 export default function Home() {
     const initialDate = new Date();
-    const {configValues} = useConfigContext();
     const [currentDate, setCurrentDate] = useState(initialDate);
-
-    const declination = astro_algo.calculateDeclinationRadians(initialDate);
-    const eqTime = astro_algo.calculateEqTimeMinutes(initialDate);
-
-    //NB: Date.getTimezoneOffset returns an offset in minutes, with the opposite sign as the timezone.
-    const timeOffsetMinutes = eqTime + 4 * configValues.longitude + initialDate.getTimezoneOffset();
-
-    const sunriseHourAngleDegrees = astro_algo.calculateSunriseHourAngleDegrees(configValues.latitude, declination);
-    //const sunriseTimeMinutes = 720 - 4 * (configValues.longitude + sunriseHourAngleDegrees) - eqTime;
-    //const sunsetTimeMinutes = 720 - 4 * (configValues.longitude - sunriseHourAngleDegrees) - eqTime;
-    const daylightMinutes = 8 * sunriseHourAngleDegrees;
-
-    const summerSolsticeDate = astro_algo.calculateQuarterDayForYear(astro_algo.QuarterDays.SummerSolstice, currentDate.getFullYear());
-    const solsticeDeclination = astro_algo.calculateDeclinationRadians(summerSolsticeDate);
-    const solsticeSunriseHourAngleDegrees = astro_algo.calculateSunriseHourAngleDegrees(configValues.latitude, solsticeDeclination);
-    const solsticeDaylightMinutes = 8 * solsticeSunriseHourAngleDegrees;
 
     // TODO(MW): Could this be pushed down into the Clock component to allow this file to be a server component?
     useEffect(() => {
@@ -38,16 +20,13 @@ export default function Home() {
     }, []);
 
     return (
-        <Stack direction={['column', null, null, 'row']} align='center' justifyContent='center' spacing='8'
-            fontSize={['xs', 'md']}
-            marginRight={['0px', null, null, '100px', '200px']}>
-            <Clock
-                civilTimeMinutes={(currentDate.getHours() * 60) + currentDate.getMinutes()}
-                civilTimeOffsetMinutes={timeOffsetMinutes}
-                currentDaylightMinutes={daylightMinutes}
-                maxDaylightMinutes={solsticeDaylightMinutes}
-            />
-            <Config />
-        </Stack>
+        <AstrolabeProvider date={currentDate}>
+            <Stack direction={['column', null, null, 'row']} align='center' justifyContent='center' spacing='8'
+                fontSize={['xs', 'md']}
+                marginRight={['0px', null, null, '100px', '200px']}>
+                <Clock />
+                <Config />
+            </Stack>
+        </AstrolabeProvider>
     );
 }

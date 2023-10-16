@@ -1,98 +1,63 @@
 'use client';
 
 import Clock from 'components/clock';
+import { AstrolabeProvider } from 'context/astrolabeProvider';
 import { useState } from 'react';
 
 export default function SolarClock() {
     //TODO(MW): Push these down into client components
-    const [currentTimeMinutes, setCurrentTimeMinutes] = useState(739);
-    const [civilTimeOffsetMinutes, setCivilTimeOffsetMinutes] = useState(-63.2);
-    const [currentDaylightMinutes, setCurrentDaylightMinutes] = useState(872);
-    const [maxDaylightMinutes, setMaxDaylightMinutes] = useState(892);
+    const [currentDay, setCurrentDay] = useState(0);
+    const [currentTimeMinutes, setCurrentTimeMinutes] = useState(0);
+
+    const changeCurrentDay = (e) => {
+        const day = e.target.valueAsNumber;
+        setCurrentDay(day);
+    };
 
     const changeCurrentTimeMinutes = (e) => {
-        setCurrentTimeMinutes(e.target.valueAsNumber);
+        const time = e.target.valueAsNumber;
+        setCurrentTimeMinutes(time);
     };
 
-    const changeCivilTimeOffsetMinutes = (e) => {
-        setCivilTimeOffsetMinutes(e.target.valueAsNumber);
-    };
-
-    const changeCurrentDaylightMinutes = (e) => {
-        setCurrentDaylightMinutes(e.target.valueAsNumber);
-    };
-
-    const changeMaxDaylightMinutes = (e) => {
-        const minutes = e.target.valueAsNumber;
-        setMaxDaylightMinutes(minutes);
-        if (currentDaylightMinutes > minutes) {
-            setCurrentDaylightMinutes(minutes);
-        } else if (currentDaylightMinutes < 1440 - minutes) {
-            setCurrentDaylightMinutes(1440 - minutes);
-        }
-    };
+    const date = new Date();
+    date.setMonth(0, 1);
+    date.setDate(date.getDate() + currentDay);
+    date.setHours(currentTimeMinutes / 60, currentTimeMinutes % 60);
 
     return (
-        <>
+        <AstrolabeProvider date={date}>
             <div>
                 <style jsx>{`
                     div {
                         display: flex;
                         flex-direction: column;
-                        width: 400px;
+                        width: 800px;
                     }
                 `}</style>
+                <input
+                    id="currentDay"
+                    type="range"
+                    onChange={changeCurrentDay}
+                    min={0}
+                    max={364}
+                    step={1}
+                    value={currentDay}
+                />
+                <label htmlFor="currentDay">Current Day</label>
+                <br/>
                 <input
                     id="currentTimeMinutes"
                     type="range"
                     onChange={changeCurrentTimeMinutes}
                     min={0}
-                    max={1440}
+                    max={1440 - 1}
                     step={1}
                     value={currentTimeMinutes}
                 />
                 <label htmlFor="currentTimeMinutes">Current Time</label>
                 <br/>
-                <input
-                    id="civilTimeOffsetMinutes"
-                    type="range"
-                    onChange={changeCivilTimeOffsetMinutes}
-                    min={-100}
-                    max={100}
-                    step={0.1}
-                    value={civilTimeOffsetMinutes}
-                />
-                <label htmlFor="civilTimeOffsetMinutes">Civil Time Offset</label>
-                <br/>
-                <input
-                    id="civilTimeOffsetMinutes"
-                    type="range"
-                    onChange={changeCurrentDaylightMinutes}
-                    min={1440 - maxDaylightMinutes}
-                    max={maxDaylightMinutes}
-                    step={1}
-                    value={currentDaylightMinutes}
-                />
-                <label htmlFor="currentDaylightMinutes">Current Daylight</label>
-                <br/>
-                <input 
-                    id="maxDaylightMinutes"
-                    type="range"
-                    onChange={changeMaxDaylightMinutes}
-                    min={720}
-                    max={1440}
-                    step={1}
-                    value={maxDaylightMinutes}
-                />
-                <label htmlFor="maxDaylightMinutes">Max Daylight</label>
-                <br/>
             </div>
-            <Clock
-                civilTimeMinutes={currentTimeMinutes}
-                civilTimeOffsetMinutes={civilTimeOffsetMinutes}
-                currentDaylightMinutes={currentDaylightMinutes}
-                maxDaylightMinutes={maxDaylightMinutes}
-            />
-        </>
+            <Clock />
+        </AstrolabeProvider>
     );
 }
