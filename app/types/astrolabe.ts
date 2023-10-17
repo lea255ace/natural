@@ -5,18 +5,23 @@ export default class Astrolabe {
     #latitude: number;
     #longitude: number;
 
-    declination: number;
-    eqTime: number;
-
     constructor({ date, latitude, longitude }: { date: Date, latitude: number, longitude: number }) {
         this.#date = date;
         this.#latitude = latitude;
         this.#longitude = longitude;
     }
 
+    dayOfYear() {
+        const startDate = new Date(this.#date.getFullYear(), 0, 1);
+        const dateDiff = (this.#date.getTime() - startDate.getTime()) + ((startDate.getTimezoneOffset() - this.#date.getTimezoneOffset()) * 60 * 1000);
+        const dayLength = 1000 * 60 * 60 * 24;
+        return Math.floor(dateDiff / dayLength);
+    }
+
     civilTimeMinutes() {
         return this.#date.getHours() * 60 + this.#date.getMinutes();
     }
+
     civilTimeOffsetMinutes() {
         const eqTime = astro_algo.calculateEqTimeMinutes(this.#date);
         //NB: Date.getTimezoneOffset returns an offset in minutes, with the opposite sign as the timezone.
