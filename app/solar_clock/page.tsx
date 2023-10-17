@@ -2,6 +2,7 @@
 
 import {
     Box,
+    Center,
     Flex,
     Heading,
     Slider,
@@ -21,15 +22,26 @@ import * as Complications from 'components/complications';
 function ComplicationDisplay() {
     const complicationsList = [
         Complications.EqTime,
+        Complications.DaylightSavings,
     ];
 
     return (
         <Wrap>
-            {complicationsList.map((Complication, index) =>
-                <WrapItem key={index}>
-                    < Complication />
-                </WrapItem>)
-            }
+            {complicationsList.map((Complication, index) => {
+                return (
+                    <WrapItem key={index}>
+                        <VStack>
+                            <Center height='200px' width='fit-content' border='1px' borderColor='gray.400' borderRadius='5px'>
+                                < Complication.Display />
+                            </Center>
+                            <Text size='md' fontWeight='bold'>
+                                {Complication.Title}
+                            </Text>
+                        </VStack>
+
+                    </WrapItem>
+                );
+            })}
         </Wrap>
     );
 }

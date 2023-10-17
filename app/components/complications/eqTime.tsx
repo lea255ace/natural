@@ -7,7 +7,7 @@ import {
     LinearScale,
     PointElement,
     LineElement,
-    Title,
+    Title as ChartTitle,
     Tooltip,
     Legend,
 } from 'chart.js';
@@ -18,24 +18,24 @@ ChartJS.register(
     LinearScale,
     PointElement,
     LineElement,
-    Title,
+    ChartTitle,
     Tooltip,
     Legend,
 );
 
-function computeEquationOfTime(d: number) {
-    const bRad = 2 * Math.PI * (d - 81) / 365;
-    return 9.87 * Math.sin(2 * bRad) - 7.67 * Math.sin(bRad + 1.37);
-}
+export const Title = 'Equation of Time';
+export function Display() {
 
-export default function EqTime() {
     const astrolabe = useAstrolabeContext();
-    
     const eqTimeRange = Array.from({length: 365}, (x, i) => i);
-    const eqTimeData = eqTimeRange.map((x) => computeEquationOfTime(x));
+    const eqTimeData = eqTimeRange.map((x, i) => {
+        const date = new Date(astrolabe.date.getFullYear(), 0, 1, 12, 0, 0, 0);
+        date.setDate(date.getDate() + i);
+        return astrolabe.eqTime(date);
+    });
 
     const currentDayOfYear = astrolabe.dayOfYear();
-    const currentEqTime = computeEquationOfTime(currentDayOfYear);
+    const currentEqTime = astrolabe.eqTime();
 
     const axisColor = '#222222';
     const gridColor = '#CCCCCC';
@@ -78,10 +78,10 @@ export default function EqTime() {
                 label: 'Dataset 1',
                 order: 2,
                 elements: {
-                    line: {tension: 0.25},
                     point: {radius: 0, hitRadius: 0}
                 },
                 data: eqTimeData,
+                tension: 0.25,
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
@@ -100,7 +100,7 @@ export default function EqTime() {
         ],
     };
     return (
-        <Box width='200px' height='200px'>
+        <Box width='200px' height='100%'>
             <Line options={options} data={data} />
         </Box>
     );

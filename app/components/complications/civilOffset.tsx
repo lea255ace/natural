@@ -1,7 +1,8 @@
 import { Box } from '@chakra-ui/react';
 import { useAstrolabeContext } from 'context/astrolabeProvider';
 
-export default function CivilOffset() {
+export const Title = 'Civil Time Offset';
+export function Display() {
     const astrolabe = useAstrolabeContext();
     
     return (
