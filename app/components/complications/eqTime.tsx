@@ -7,9 +7,8 @@ import {
     LinearScale,
     PointElement,
     LineElement,
-    Title as ChartTitle,
-    Tooltip,
-    Legend,
+    ChartData,
+    ChartOptions,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -18,9 +17,6 @@ ChartJS.register(
     LinearScale,
     PointElement,
     LineElement,
-    ChartTitle,
-    Tooltip,
-    Legend,
 );
 
 export const Title = 'Equation of Time';
@@ -39,7 +35,7 @@ export function Display() {
 
     const axisColor = '#222222';
     const gridColor = '#CCCCCC';
-    const options = {
+    const options: ChartOptions<'line'> = {
         maintainAspectRatio: false,
         plugins: {
             legend: {
@@ -71,29 +67,26 @@ export function Display() {
             },
         },
     };
-    const data = {
+    const data: ChartData<'line'> = {
         labels: eqTimeRange,
         datasets: [
             {
                 label: 'Dataset 1',
-                order: 2,
-                elements: {
-                    point: {radius: 0, hitRadius: 0}
-                },
                 data: eqTimeData,
+                order: 2,
+                pointRadius: 0,
+                pointHitRadius: 0,
                 tension: 0.25,
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
             {
                 label: 'Dataset 2',
-                type: 'scatter',
+                data: [{x: currentDayOfYear, y: currentEqTime}],
                 parsing: false,
                 order: 1,
-                elements: {
-                    point: {radius: 5, hitRadius: 0}
-                },
-                data: [{x: currentDayOfYear, y: currentEqTime}],
+                pointRadius: 5,
+                pointHitRadius: 0,
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
             },
