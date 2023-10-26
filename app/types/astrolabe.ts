@@ -18,6 +18,32 @@ export default class Astrolabe {
         return Math.floor(dateDiff / dayLength);
     }
 
+    #probeForDay({startDate, day, count}: {startDate: Date, day: number, count: number}) {
+        const checkDate = new Date(startDate);
+        let dayCount = (checkDate.getDay() == day) ? 1 : 0;
+        while (dayCount < count) {
+            checkDate.setDate(checkDate.getDate() + 1);
+            if (checkDate.getDay() == day) {
+                ++dayCount;
+            }
+        }
+        return checkDate;
+    }
+
+    // US DST Start: Second Sunday in March
+    daylightSavingsStartDate(date = this.date) {
+        const startDate = this.#probeForDay({startDate: new Date(date.getFullYear(), 2, 1), day: 0, count: 2});
+        startDate.setHours(2, 0, 0, 0);
+        return startDate;
+    }
+
+    // US DST End: First Sunday in November
+    daylightSavingsEndDate(date = this.date) {
+        const endDate = this.#probeForDay({startDate: new Date(date.getFullYear(), 10, 1), day: 0, count: 1});
+        endDate.setHours(2, 0, 0, 0);
+        return endDate;
+    }
+
     isDaylightSavings(date = this.date) {
         const winterDateOffset = new Date(date.getFullYear(), 0, 1).getTimezoneOffset();
         const summerDateOffset = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
