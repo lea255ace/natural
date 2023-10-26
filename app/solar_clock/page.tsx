@@ -1,98 +1,100 @@
 'use client';
 
+import {
+    Box,
+    Center,
+    Flex,
+    Heading,
+    Slider,
+    SliderFilledTrack,
+    SliderThumb,
+    SliderTrack,
+    Text,
+    VStack,
+    Wrap,
+    WrapItem,
+} from '@chakra-ui/react';
 import Clock from 'components/clock';
+import { AstrolabeProvider } from 'context/astrolabeProvider';
 import { useState } from 'react';
+import * as Complications from 'components/complications';
+
+function ComplicationDisplay() {
+    const complicationsList = [
+        Complications.EqTime,
+        Complications.DaylightSavings,
+    ];
+
+    return (
+        <Wrap>
+            {complicationsList.map((Complication, index) => {
+                return (
+                    <WrapItem key={index}>
+                        <VStack>
+                            <Center height='200px' width='fit-content' border='1px' borderColor='gray.400' borderRadius='5px'>
+                                < Complication.Display />
+                            </Center>
+                            <Text size='md' fontWeight='bold'>
+                                {Complication.Title}
+                            </Text>
+                        </VStack>
+
+                    </WrapItem>
+                );
+            })}
+        </Wrap>
+    );
+}
 
 export default function SolarClock() {
     //TODO(MW): Push these down into client components
-    const [currentTimeMinutes, setCurrentTimeMinutes] = useState(739);
-    const [civilTimeOffsetMinutes, setCivilTimeOffsetMinutes] = useState(-63.2);
-    const [currentDaylightMinutes, setCurrentDaylightMinutes] = useState(872);
-    const [maxDaylightMinutes, setMaxDaylightMinutes] = useState(892);
+    const [currentDay, setCurrentDay] = useState(50);
+    const [currentTimeMinutes, setCurrentTimeMinutes] = useState(720);
 
-    const changeCurrentTimeMinutes = (e) => {
-        setCurrentTimeMinutes(e.target.valueAsNumber);
-    };
-
-    const changeCivilTimeOffsetMinutes = (e) => {
-        setCivilTimeOffsetMinutes(e.target.valueAsNumber);
-    };
-
-    const changeCurrentDaylightMinutes = (e) => {
-        setCurrentDaylightMinutes(e.target.valueAsNumber);
-    };
-
-    const changeMaxDaylightMinutes = (e) => {
-        const minutes = e.target.valueAsNumber;
-        setMaxDaylightMinutes(minutes);
-        if (currentDaylightMinutes > minutes) {
-            setCurrentDaylightMinutes(minutes);
-        } else if (currentDaylightMinutes < 1440 - minutes) {
-            setCurrentDaylightMinutes(1440 - minutes);
-        }
-    };
+    const date = new Date();
+    date.setMonth(0, 1);
+    date.setDate(date.getDate() + currentDay);
+    date.setHours(currentTimeMinutes / 60, currentTimeMinutes % 60);
 
     return (
-        <>
-            <div>
-                <style jsx>{`
-                    div {
-                        display: flex;
-                        flex-direction: column;
-                        width: 400px;
-                    }
-                `}</style>
-                <input
-                    id="currentTimeMinutes"
-                    type="range"
-                    onChange={changeCurrentTimeMinutes}
+        <AstrolabeProvider date={date}>
+            <Box width='100%' px='5%' marginTop='2em'>
+                <Slider
+                    id="currentDay"
+                    defaultValue={50}
                     min={0}
-                    max={1440}
-                    step={1}
-                    value={currentTimeMinutes}
-                />
-                <label htmlFor="currentTimeMinutes">Current Time</label>
-                <br/>
-                <input
-                    id="civilTimeOffsetMinutes"
-                    type="range"
-                    onChange={changeCivilTimeOffsetMinutes}
-                    min={-100}
-                    max={100}
-                    step={0.1}
-                    value={civilTimeOffsetMinutes}
-                />
-                <label htmlFor="civilTimeOffsetMinutes">Civil Time Offset</label>
-                <br/>
-                <input
-                    id="civilTimeOffsetMinutes"
-                    type="range"
-                    onChange={changeCurrentDaylightMinutes}
-                    min={1440 - maxDaylightMinutes}
-                    max={maxDaylightMinutes}
-                    step={1}
-                    value={currentDaylightMinutes}
-                />
-                <label htmlFor="currentDaylightMinutes">Current Daylight</label>
-                <br/>
-                <input 
-                    id="maxDaylightMinutes"
-                    type="range"
-                    onChange={changeMaxDaylightMinutes}
-                    min={720}
-                    max={1440}
-                    step={1}
-                    value={maxDaylightMinutes}
-                />
-                <label htmlFor="maxDaylightMinutes">Max Daylight</label>
-                <br/>
-            </div>
-            <Clock
-                civilTimeMinutes={currentTimeMinutes}
-                civilTimeOffsetMinutes={civilTimeOffsetMinutes}
-                currentDaylightMinutes={currentDaylightMinutes}
-                maxDaylightMinutes={maxDaylightMinutes}
-            />
-        </>
+                    max={364}
+                    onChange={(v) => setCurrentDay(v)}
+                >
+                    <SliderTrack>
+                        <SliderFilledTrack />
+                    </SliderTrack>
+                    <SliderThumb />
+                </Slider>
+                <Text fontWeight='bold' marginBottom='1.5em'>Day of Year</Text>
+                <Slider
+                    id="currentTime"
+                    defaultValue={720}
+                    min={0}
+                    max={1440 - 1}
+                    onChange={(v) => setCurrentTimeMinutes(v)}
+                >
+                    <SliderTrack>
+                        <SliderFilledTrack />
+                    </SliderTrack>
+                    <SliderThumb />
+                </Slider>
+                <Text fontWeight='bold'>Time of Day</Text>
+            </Box>
+            <Flex gap='2'>
+                <Box minWidth='500px' flex='1'>
+                    <Clock />
+                </Box>
+                <VStack align='start' flex='1'>
+                    <Heading as='h2' size='lg'>Complications</Heading>
+                    <ComplicationDisplay />
+                </VStack>
+            </Flex>
+        </AstrolabeProvider>
     );
 }

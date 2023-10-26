@@ -69,6 +69,7 @@ const ClockFaceColors = (): JSX.Element => (
     </svg>
 );
 
+//TODO(MW): This is wrong! The summer and winter solstice sunrise times are not symmetric about the equinox sunrise time.
 const solsticeLineImage: ClockImage = { imageSrc: solsticeLine, zIndex: 1 };
 function SolsticeLines({ solsticeSunriseHourAngleDeg }:
     { solsticeSunriseHourAngleDeg: number }): JSX.Element {
