@@ -2,25 +2,25 @@ import { JSX } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import { Box } from '@chakra-ui/react';
 
-import clockFrame from '/public/Clock Frame.png';
-import civilClock from '/public/Civil Clock.png';
-import midLines from '/public/Mid Lines.png';
-import solsticeLine from '/public/Solstice Line.png';
-import sunLine from '/public/Sun Line.png';
-import phaseLine from '/public/Phase Line.png';
-import stageLine from '/public/Stage Line.png';
-import morningLabel from '/public/Morning Label.png';
-import forenoonLabel from '/public/Forenoon Label.png';
-import afternoonLabel from '/public/Afternoon Label.png';
-import eveningLabel from '/public/Evening Label.png';
-import firstWatchLabel from '/public/First Watch Label.png';
-import secondWatchLabel from '/public/Second Watch Label.png';
-import thirdWatchLabel from '/public/Third Watch Label.png';
-import fourthWatchLabel from '/public/Fourth Watch Label.png';
-import timeHand from '/public/Time Hand.png';
-import stageTimer from '/public/Stage Timer.png';
-import stageMarker from '/public/Stage Marker.png';
-import stageHand from '/public/Stage Hand.png';
+import clockFrame from '/public/ClockFrame.png';
+import civilClock from '/public/CivilClock.png';
+import midLines from '/public/MidLines.png';
+import solsticeLine from '/public/SolsticeLine.png';
+import sunLine from '/public/SunLine.png';
+import phaseLine from '/public/PhaseLine.png';
+import stageLine from '/public/StageLine.png';
+import morningLabel from '/public/MorningLabel.png';
+import forenoonLabel from '/public/ForenoonLabel.png';
+import afternoonLabel from '/public/AfternoonLabel.png';
+import eveningLabel from '/public/EveningLabel.png';
+import firstWatchLabel from '/public/FirstWatchLabel.png';
+import secondWatchLabel from '/public/SecondWatchLabel.png';
+import thirdWatchLabel from '/public/ThirdWatchLabel.png';
+import fourthWatchLabel from '/public/FourthWatchLabel.png';
+import timeHand from '/public/TimeHand.png';
+import stageTimer from '/public/StageTimer.png';
+import stageMarker from '/public/StageMarker.png';
+import stageHand from '/public/StageHand.png';
 
 type ClockImage = {
     imageSrc: StaticImageData

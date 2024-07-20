@@ -5,7 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "build-debug": "BUILD_MODE=debug next build",
-    "start": "next start",
+    "serve": "serve out",
     "clean": "rm -r .next/ out/ || exit 0"
   },
   "dependencies": {
